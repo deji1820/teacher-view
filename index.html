@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HIMC - Teacher Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --navy: #2d2550;
+            --dark-navy: #1e1838;
+            --gold: #d4a650;
+            --light-gold: #f5c563;
+            --light: #f8f9fa;
+            --white: #ffffff;
+            --gray: #6c757d;
+            --light-gray: #e8e9eb;
+            --form-gray: #c5c6c8;
+            --sidebar-width: 280px;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            background: var(--light);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+        /* Offense Report History Page */
+.offense-history-page {
+    padding: 40px;
+}
+
+.history-container {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.search-date-controls {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.search-input {
+    padding: 12px 20px;
+    background: var(--white);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    color: var(--dark-navy);
+    min-width: 300px;
+}
+
+.search-input::placeholder {
+    color: #ccc;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--navy);
+}
+
+.date-select {
+    padding: 12px 40px 12px 20px;
+    background: var(--white);
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    color: var(--dark-navy);
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%232d2550' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+}
+
+.date-select:focus {
+    outline: none;
+    border-color: var(--navy);
+}
+
+.history-table-wrapper {
+    background: var(--white);
+    border-radius: 8px;
+    overflow-x: auto;
+}
+
+.history-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table thead {
+    background: var(--white);
+}
+
+.history-table th {
+    padding: 15px 12px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-navy);
+    border: 2px solid var(--dark-navy);
+}
+
+.history-table td {
+    padding: 15px 12px;
+    font-size: 13px;
+    color: var(--dark-navy);
+    border: 2px solid var(--dark-navy);
+    text-align: center;
+}
+
+.history-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+.status-validated {
+    color: #28a745;
+    font-weight: 600;
+}
+
+.status-pending {
+    color: #ffc107;
+    font-weight: 600;
+}
+
+        .dashboard {
+            display: flex;
+            height: 100vh;
+            background: var(--light);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: var(--navy);
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-header {
+            padding: 25px 20px;
+            background: var(--dark-navy);
+            border-bottom: 1px solid rgba(212, 166, 80, 0.2);
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-square {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 2px;
+        }
+
+        .logo-info {
+            flex: 1;
+        }
+
+        .logo-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--light-gold);
+            line-height: 1.3;
+        }
+
+        .logo-subtitle {
+            font-size: 12px;
+            color: var(--gold);
+            font-weight: 400;
+        }
+
+        /* Navigation */
+        .nav-menu {
+            flex: 1;
+            padding: 30px 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 30px;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-item:hover {
+            background: rgba(212, 166, 80, 0.1);
+            border-left-color: var(--gold);
+        }
+
+        .nav-item.active {
+            background: rgba(212, 166, 80, 0.15);
+            border-left-color: var(--gold);
+            font-weight: 500;
+        }
+
+        .nav-icon {
+            font-size: 24px;
+            width: 24px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--navy);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-title-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-icon {
+            font-size: 32px;
+            color: var(--gold);
+        }
+
+        .page-title-text h1 {
+            font-size: 28px;
+            color: var(--white);
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--gold);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 4px;
+            transition: background 0.3s ease;
+        }
+
+        .user-info:hover {
+            background: rgba(212, 166, 80, 0.1);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: var(--navy);
+        }
+
+        .user-details {
+            text-align: right;
+        }
+
+        .user-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        .user-email {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .dropdown-arrow {
+            color: var(--gold);
+            font-size: 12px;
+        }
+
+        /* Account Dropdown */
+        .account-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 10px;
+            background: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            min-width: 250px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .account-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .dropdown-user-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-navy);
+            margin-bottom: 5px;
+        }
+
+        .dropdown-user-email {
+            font-size: 13px;
+            color: var(--gray);
+        }
+
+        .dropdown-menu-items {
+            padding: 10px 0;
+        }
+
+        .dropdown-menu-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            color: var(--dark-navy);
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+        }
+
+        .dropdown-menu-item:hover {
+            background: var(--light-gray);
+        }
+
+        .dropdown-menu-item.logout {
+            color: #dc3545;
+        }
+
+        .dropdown-menu-item.logout:hover {
+            background: #fff5f5;
+        }
+
+        .dropdown-icon {
+            font-size: 18px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 40px;
+            flex: 1;
+        }
+
+        /* Stats Cards */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: var(--dark-navy);
+            border-radius: 16px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 15px;
+        }
+
+        .stat-value {
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background: linear-gradient(135deg, #f5c563 0%, #d4a650 100%);
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 4px 15px rgba(212, 166, 80, 0.3);
+        }
+
+        .announcement-icon {
+            font-size: 28px;
+        }
+
+        .announcement-text {
+            flex: 1;
+            font-size: 16px;
+            color: var(--dark-navy);
+        }
+
+        .announcement-label {
+            font-weight: 600;
+            margin-right: 10px;
+        }
+
+        /* Report Button Container */
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .report-button {
+            padding: 14px 30px;
+            background: var(--dark-navy);
+            border: none;
+            border-radius: 8px;
+            color: var(--gold);
+            font-family: 'Outfit', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .report-button:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 37, 80, 0.3);
+        }
+
+        .report-icon {
+            font-size: 18px;
+        }
+
+        /* Recent Reports Section */
+        .reports-section {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .reports-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .reports-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--dark-navy);
+        }
+
+        .history-link {
+            color: var(--dark-navy);
+            text-decoration: underline;
+            font-size: 14px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .history-link:hover {
+            color: var(--navy);
+        }
+
+        /* Reports Table */
+        .reports-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--white);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .reports-table thead {
+            background: var(--white);
+        }
+
+        .reports-table th {
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-navy);
+            border: 2px solid var(--dark-navy);
+        }
+
+        .reports-table td {
+            padding: 20px 15px;
+            font-size: 13px;
+            color: var(--dark-navy);
+            border: 2px solid var(--dark-navy);
+            text-align: center;
+        }
+
+        .reports-table tbody tr {
+            min-height: 60px;
+        }
+
+        .reports-table tbody tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* Add Offense Page */
+        .add-offense-page {
+            padding: 40px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            background: var(--dark-navy);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px 12px 12px;
+            font-size: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--navy);
+            transform: translateX(-5px);
+        }
+
+        .back-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--dark-navy);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--white);
+        }
+
+        .offense-form-container {
+            background: var(--form-gray);
+            border-radius: 20px;
+            padding: 60px;
+            max-width: 1000px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-label {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-navy);
+            text-align: left;
+        }
+
+        .form-input,
+        .form-select {
+            width: 100%;
+            padding: 14px 20px;
+            background: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 15px;
+            color: var(--dark-navy);
+            transition: all 0.3s ease;
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%232d2550' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 12px;
+            cursor: pointer;
+            background-color: var(--white);
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(45, 37, 80, 0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 40px;
+        }
+
+        .submit-button {
+            background: var(--dark-navy);
+            color: var(--gold);
+            border: none;
+            border-radius: 12px;
+            padding: 16px 60px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .submit-button:hover {
+            background: var(--navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 37, 80, 0.3);
+        }
+
+        /* Manage Offense Page */
+        .manage-offense-page {
+            padding: 40px;
+        }
+
+        .manage-offense-content {
+            background: var(--light-gray);
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 1400px;
+        }
+
+        .manage-offense-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .manage-card {
+            background: var(--dark-navy);
+            border-radius: 16px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .manage-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            background: #2a2145;
+        }
+
+        .manage-card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1.4;
+        }
+        /* Disciplinary Measures Page Styles */
+.disciplinary-measures-page {
+    padding: 40px;
+}
+
+.disciplinary-content {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 40px;
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+}
+
+.disciplinary-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    background: var(--light-gray);
+    padding-bottom: 20px;
+}
+
+.disciplinary-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--dark-navy);
+    /* Remove the display: none; */
+}
+
+.btn-edit-history {
+    padding: 10px 30px;
+    background: #a8a8a8;
+    border: none;
+    border-radius: 20px;
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit-history:hover {
+    background: #8a8a8a;
+    transform: translateY(-2px);
+}
+
+.offense-level-section {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.offense-level-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--dark-navy);
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--dark-navy);
+}
+
+.offense-content {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin-bottom: 35px;
+}
+
+.offense-list {
+    list-style: none;
+}
+
+.offense-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 15px;
+    color: var(--dark-navy);
+    line-height: 1.6;
+}
+/* My Sections Page */
+.my-sections-page {
+    padding: 40px;
+}
+
+.sections-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    max-width: 1200px;
+}
+
+.section-card {
+    background: var(--dark-navy);
+    border-radius: 16px;
+    padding: 40px 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+    background: #2a2145;
+}
+
+.section-grade {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--light-gold);
+    margin-bottom: 10px;
+}
+
+.section-name {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--gold);
+}
+
+/* Section Detail Page */
+.section-detail-page {
+    padding: 40px;
+}
+
+.section-detail-container {
+    background: var(--light-gray);
+    border-radius: 12px;
+    padding: 40px;
+}
+
+.section-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--white);
+    padding: 20px 30px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.section-info-left {
+    display: flex;
+    gap: 40px;
+}
+
+.section-info-item {
+    font-size: 16px;
+    color: var(--dark-navy);
+}
+
+.section-info-item strong {
+    font-weight: 600;
+}
+
+.section-quarter {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-navy);
+}
+
+.roster-table-wrapper {
+    background: var(--white);
+    border-radius: 8px;
+    overflow-x: auto;
+    padding: 20px;
+}
+
+.roster-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.roster-table thead {
+    background: var(--white);
+}
+
+.roster-table th {
+    padding: 15px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-navy);
+    border: 2px solid var(--dark-navy);
+}
+
+.roster-table td {
+    padding: 20px 15px;
+    font-size: 13px;
+    color: var(--dark-navy);
+    border: 2px solid var(--dark-navy);
+    text-align: center;
+}
+
+.roster-table tbody tr {
+    min-height: 50px;
+}
+
+.roster-table tbody tr:hover {
+    background: #f9f9f9;
+}
+
+@media (max-width: 1024px) {
+    .sections-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .sections-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-info-bar {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .section-info-left {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+.offense-list li:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--dark-navy);
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.penalties-section {
+    background: #f9f9f9;
+    padding: 25px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+.penalties-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--dark-navy);
+    margin-bottom: 15px;
+}
+
+.penalties-list {
+    list-style: none;
+}
+
+.penalties-list li {
+    padding: 8px 0;
+    padding-left: 25px;
+    position: relative;
+    font-size: 15px;
+    color: var(--dark-navy);
+    line-height: 1.6;
+}
+
+.penalties-list li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--dark-navy);
+    font-weight: bold;
+}
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                width: 220px;
+            }
+
+            .dashboard-content {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .offense-form-container {
+                padding: 40px 30px;
+            }
+
+            .manage-offense-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .manage-offense-content {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: fixed;
+                left: -280px;
+                z-index: 1000;
+                transition: left 0.3s ease;
+            }
+
+            .sidebar.open {
+                left: 0;
+            }
+
+            .top-bar {
+                padding: 15px 20px;
+            }
+
+            .page-title-text h1 {
+                font-size: 22px;
+            }
+
+            .user-email {
+                display: none;
+            }
+
+            .button-container {
+                width: 100%;
+            }
+
+            .report-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .add-offense-page {
+                padding: 20px;
+            }
+
+            .offense-form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <div class="logo-square">HIMC</div>
+                    <div class="logo-info">
+                        <div class="logo-title">Holy Infant Montessori Center</div>
+                        <div class="logo-subtitle">Disciplinary Services</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" onclick="showDashboard()">
+                    <span class="nav-icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" onclick="showManageOffense()">
+                    <span class="nav-icon">📁</span>
+                    <span>Manage Offense</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <div class="top-bar">
+                <div class="page-title-section">
+                    <div class="page-icon" id="pageIcon">🏠</div>
+                    <div class="page-title-text">
+                        <h1 id="pageTitle">Dashboard</h1>
+                        <p class="page-subtitle" id="pageSubtitle">Welcome Back, Teacher!</p>
+                    </div>
+                </div>
+                
+                <div class="user-section">
+                    <div class="notification-icon">🔔</div>
+                    <div class="user-info" onclick="toggleAccountDropdown(event)">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-details">
+                            <div class="user-name">Teacher 1</div>
+                            <div class="user-email">teach.himc.edu.ph</div>
+                        </div>
+                        <span class="dropdown-arrow">▼</span>
+                    </div>
+
+                    <!-- Account Dropdown Menu -->
+                    <div class="account-dropdown" id="accountDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-user-title">Teacher 1</div>
+                            <div class="dropdown-user-email">teach.himc.edu.ph</div>
+                        </div>
+                        <div class="dropdown-menu-items">
+                            <a href="#" class="dropdown-menu-item" onclick="editUsername(event)">
+                                <span class="dropdown-icon">👤</span>
+                                <span>Edit Username</span>
+                            </a>
+                            <a href="#" class="dropdown-menu-item" onclick="changePassword(event)">
+                                <span class="dropdown-icon">🔒</span>
+                                <span>Change Password</span>
+                            </a>
+                            <a href="#" class="dropdown-menu-item logout" onclick="logout(event)">
+                                <span class="dropdown-icon">🚪</span>
+                                <span>Logout</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Home -->
+            <div id="dashboardHome" class="dashboard-content">
+                <!-- Stats Cards -->
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-title">My Sections</div>
+                        <div class="stat-value">4</div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-title">Excused Today</div>
+                        <div class="stat-value">2</div>
+                    </div>
+                </div>
+
+                <!-- Announcement Banner -->
+                <div class="announcement-banner">
+                    <div class="announcement-icon">📢</div>
+                    <div class="announcement-text">
+                        <span class="announcement-label">Announcement:</span>
+                        <span>Disciplinary announcements will appear here...</span>
+                    </div>
+                </div>
+
+                <!-- Report Button Container -->
+                <div class="button-container">
+                    <button class="report-button" onclick="reportOffense()">
+                        <span class="report-icon">📋</span>
+                        <span>Report Offense</span>
+                    </button>
+                </div>
+
+                <!-- Recent Reports Section -->
+                <div class="reports-section">
+                    <div class="reports-header">
+                        <h2 class="reports-title">Recent Reports</h2>
+                        <a href="#" class="history-link" onclick="viewHistory()">History</a>
+                    </div>
+
+                    <table class="reports-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Grade & Section</th>
+                                <th>Level</th>
+                                <th>Offense</th>
+                                <th>Date Reported</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Add Offense Page -->
+            <div id="addOffensePage" class="add-offense-page hidden">
+                <button class="back-button" onclick="backToDashboard()">
+                    <div class="back-icon">←</div>
+                    <span>Add Offense</span>
+                </button>
+
+                <div class="offense-form-container">
+                    <form id="offenseForm" onsubmit="submitOffense(event)">
+                        <div class="form-row">
+                            <label class="form-label">Student Name:</label>
+                            <input type="text" class="form-input" placeholder="Enter student name" required>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label">Section:</label>
+                            <input type="text" class="form-input" placeholder="Enter section" required>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label">Level of Offense:</label>
+                            <select class="form-select" required>
+                                <option value="">Select Level</option>
+                                <option value="1">Level 1</option>
+                                <option value="2">Level 2</option>
+                                <option value="3">Level 3</option>
+                                <option value="4">Level 4</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label">Type of Offense:</label>
+                            <select class="form-select" required>
+                                <option value="">Select Offense</option>
+                                <option value="late">Late</option>
+                                <option value="incomplete-uniform">Incomplete Uniform</option>
+                                <option value="loitering">Loitering</option>
+                                <option value="smoking">Smoking</option>
+                                <option value="bullying">Bullying</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <label class="form-label">Date:</label>
+                            <input type="date" class="form-input" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="submit-button">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Manage Offense Page -->
+            <div id="manageOffensePage" class="manage-offense-page hidden">
+                <div class="manage-offense-content">
+                    <div class="manage-offense-grid">
+                        <div class="manage-card" onclick="viewDisciplinaryMeasures()">
+                            <h3 class="manage-card-title">The HIMC Disciplinary<br>Measures</h3>
+                        </div>
+                        
+                        <div class="manage-card" onclick="viewOffenseHistory()">
+                            <h3 class="manage-card-title">Offense Report History</h3>
+                        </div>
+                        
+                        <div class="manage-card" onclick="viewMySections()">
+                            <h3 class="manage-card-title">My Sections</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- HIMC Disciplinary Measures Page -->
+<div id="disciplinaryMeasuresPage" class="disciplinary-measures-page hidden">
+    <button class="back-button" onclick="backToManageOffense()">
+        <div class="back-icon">←</div>
+        <span>The HIMC Disciplinary Measures</span>
+    </button>
+
+    <div class="disciplinary-content">
+        <div class="disciplinary-header">
+    <h2 class="disciplinary-title">The HIMC Disciplinary Measures</h2>
+</div>
+        
+        <!-- Level 1 Offenses -->
+        <div class="offense-level-section">
+            <h3 class="offense-level-title">LEVEL 1 - Negligence to Fulfill Basic Duties</h3>
+            
+            <div class="offense-content">
+                <ul class="offense-list">
+                    <li>Tardiness</li>
+                    <li>Unexpected absences</li>
+                    <li>Wearing inappropriate attire</li>
+                    <li>Failure to submit correspondence / have materials a 3rd time</li>
+                    <li>Sleeping in class</li>
+                    <li>Violation of SOP's</li>
+                </ul>
+                
+                <ul class="offense-list">
+                    <li>Misbehavior</li>
+                    <li>Improper haircut</li>
+                    <li>No ID or No gate pass</li>
+                    <li>Loitering during class hours</li>
+                    <li>Littering</li>
+                    <li>Trespassing</li>
+                    <li>Disruption of classes.</li>
+                </ul>
+            </div>
+
+            <div class="penalties-section">
+                <h4 class="penalties-title">Penalties for Level 1 Offenses</h4>
+                <ul class="penalties-list">
+                    <li>1st Offense - Reminder + 1 demerit</li>
+                    <li>2nd Offense - Reminder + 2 demerits</li>
+                    <li>3rd Offense - Reprimand + 3 demerits</li>
+                    <li>4th Offense onwards - Parent Notification + 4 demerits</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Level 2 Offenses -->
+        <div class="offense-level-section">
+            <h3 class="offense-level-title">LEVEL 2 - Minor Behavioral Infractions or Violations of Basic School Rules and Regulations</h3>
+            
+            <div class="offense-content">
+                <ul class="offense-list">
+                    <li>Any disruptive behavior/audio/video/material or physical appearance which distracts/affects co-attendees.</li>
+                    <li>Using vulgar language or indecent publication online or behavior offline</li>
+                    <li>Bringing of electronic gadgets (i.e. cell phones, iPad, iPod, digital camera, etc.)</li>
+                    <li>Staying in the school premises after school hours (a student has 30 minutes to go home after dismissed)</li>
+                </ul>
+                
+                <ul class="offense-list">
+                    <li>Putting temporary marks on their bodies</li>
+                    <li>Putting on make-up or colored nail polish</li>
+                    <li>Fancy haircut, fancy or loud hair color, and hair with highlights</li>
+                    <li>Holding unauthorized meetings, rallies, or demonstrations</li>
+                    <li>Vandalism</li>
+                </ul>
+            </div>
+
+            <div class="penalties-section">
+                <h4 class="penalties-title">Penalties for Level 2 Offenses</h4>
+                <ul class="penalties-list">
+                    <li>1st Offense - Reminder + 2 demerit</li>
+                    <li>2nd Offense - Reminder + 4 demerits</li>
+                    <li>3rd Offense - Reprimand + 6 demerits</li>
+                    <li>4th Offense onwards - Parent Notification + Deprivation from attending the subject where offense was committed + 8 demerits</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Level 3 Offenses -->
+        <div class="offense-level-section">
+            <h3 class="offense-level-title">LEVEL 3 - Acts of Disrespect and Dishonesty</h3>
+            
+            <div class="offense-content">
+                <ul class="offense-list">
+                    <li>Any form of disrespect, malicious act, immorality or unwanted gesture online & offline.</li>
+                    <li>Tampering of any school document/property or attempt to hack the HIMC system (Student must pay for any / replace any broken items)</li>
+                    <li>Any form of dishonesty, like (but not limited to) forgery, online identity theft, etc.</li>
+                    <li>Bringing of cigarettes, lighter or matches without authorization</li>
+                </ul>
+                
+                <ul class="offense-list">
+                    <li>Lending of ID's and gate pass to others</li>
+                    <li>Cutting classes</li>
+                    <li>Intentional/Unintentional inflicting of harm to himself/herself</li>
+                    <li>Stealing or attempted theft</li>
+                    <li>Bringing pornographic materials</li>
+                    <li>Bringing of gambling materials</li>
+                    <li>Assault or threat to a person in authority while performing duty</li>
+                </ul>
+            </div>
+
+            <div class="penalties-section">
+                <h4 class="penalties-title">Penalties for Level 3 Offenses</h4>
+                <ul class="penalties-list">
+                    <li>1st Offense of an infraction - Parent Notification + 3 demerits</li>
+                    <li>2nd Offense of the same infraction - Parent Notification + Deprivation from attending the subject where offense was committed + 6 demerits</li>
+                    <li>3rd Offense of the same infraction onwards - Parent Notification + Prohibition from attending 1 day of synchronous classes + 9 demerits</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Level 4 Offenses -->
+        <div class="offense-level-section">
+            <h3 class="offense-level-title">LEVEL 4 - Acts of Unbecoming of an HIMC Student</h3>
+            
+            <div class="offense-content">
+                <ul class="offense-list">
+                    <li>Any form of cheating (non-transmutable zero + penalty)</li>
+                    <li>Any kind of bullying (Implementing Rules and Regulations of Republic Act #10627 or the Anti-Bullying Act of 2013)</li>
+                    <li>Violation of the Data Privacy Act</li>
+                    <li>Any violation of the HIMC Child Protection Policy (Implementing Rules and Regulations in compliance to Section 7 of DepEd Order 40, 2012)</li>
+                    <li>Threatening/Harassment of any individual in relation to HIMC both online and offline</li>
+                </ul>
+                
+                <ul class="offense-list">
+                    <li>Conduct unbecoming as manifested by (but not limited to): any form of pornography, smoking cigarettes / vaping, extortion, exhibiting signs of under the influence of drugs or alcohol, initiating fights or gambling, backbiting or rumor mongering</li>
+                    <li>Possession of deadly weapons</li>
+                </ul>
+            </div>
+            
+            <div class="penalties-section">
+                <h4 class="penalties-title">Penalties for Level 4 Offenses</h4>
+                <ul class="penalties-list">
+                    <li>1st Offense - Parent Notification + 1 day suspension + 26 demerits</li>
+                    <li>2nd Offense - Parent Notification + 2 days suspension + Conduct probation + 26 demerits</li>
+                    <li>3rd Offense - Parent Notification + Removal from attending synchronous classes for the remainder of the quarter + warning for dropping from school roll + 26 demerits</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Offense Report History Page -->
+<div id="offenseHistoryPage" class="offense-history-page hidden">
+    <button class="back-button" onclick="backToManageOffense()">
+        <div class="back-icon">←</div>
+        <span>Offense Report History</span>
+    </button>
+
+    <div class="history-container">
+        <div class="history-header">
+            <input type="text" class="search-input" placeholder="Search" id="historySearch">
+            <div class="search-date-controls">
+                <select class="date-select" id="historyDateSelect">
+                    <option>06/17/2025</option>
+                    <option>06/16/2025</option>
+                    <option>06/15/2025</option>
+                    <option>06/14/2025</option>
+                    <option>06/13/2025</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="history-table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Offense</th>
+                        <th>Level</th>
+                        <th>Date</th>
+                        <th>Reported by</th>
+                        <th>Remarks</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dela Cruz, Juan</td>
+                        <td>Bullying</td>
+                        <td>4</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>Referred to guidance</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Santos, Isabella</td>
+                        <td>Tardiness</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Ma. Leonora Theresa</td>
+                        <td>N/A</td>
+                        <td class="status-pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Mendoza, Clara</td>
+                        <td>Tardiness</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Ma. Leonora Theresa</td>
+                        <td>N/A</td>
+                        <td class="status-pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Tolentino, Vince</td>
+                        <td>Tardiness</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Ma. Leonora Theresa</td>
+                        <td>N/A</td>
+                        <td class="status-pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Rosales, Miguel</td>
+                        <td>Bringing of electric gadgets</td>
+                        <td>2</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>Gadget confiscated</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Gutierrez, Raphael</td>
+                        <td>Misbehavior</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>N/A</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Villegas, Angel</td>
+                        <td>Cutting classes</td>
+                        <td>3</td>
+                        <td>06/17/2025</td>
+                        <td>Harry Styles</td>
+                        <td>N/A</td>
+                        <td class="status-pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Reyes, Benedict</td>
+                        <td>Tardiness</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Pedro Penduko</td>
+                        <td>N/A</td>
+                        <td class="status-pending">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Navarro, Vhong</td>
+                        <td>Loitering during class hours</td>
+                        <td>1</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>N/A</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Gonzales, Maria</td>
+                        <td>Forgery</td>
+                        <td>3</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>Parent Notified</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Villanueva, John</td>
+                        <td>Using vulgar language</td>
+                        <td>2</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>N/A</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                    <tr>
+                        <td>Del Rosario, Emmanuel</td>
+                        <td>Bullying</td>
+                        <td>4</td>
+                        <td>06/17/2025</td>
+                        <td>Jim Gorospe</td>
+                        <td>Referred to guidance</td>
+                        <td class="status-validated">Validated</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- My Sections Page -->
+<div id="mySectionsPage" class="my-sections-page hidden">
+    <div class="sections-grid">
+        <div class="section-card" onclick="viewSectionDetail('9', 'St. Kostka', 'Ms. Mereope Sharma')">
+            <div class="section-grade">Grade 9</div>
+            <div class="section-name">St. Kostka</div>
+        </div>
+        
+        <div class="section-card" onclick="viewSectionDetail('9', 'St. Ruiz', 'Ms. Mereope Sharma')">
+            <div class="section-grade">Grade 9</div>
+            <div class="section-name">St. Ruiz</div>
+        </div>
+        
+        <div class="section-card" onclick="viewSectionDetail('9', 'St. Pio', 'Ms. Mereope Sharma')">
+            <div class="section-grade">Grade 9</div>
+            <div class="section-name">St. Pio</div>
+        </div>
+        
+        <div class="section-card" onclick="viewSectionDetail('10', 'St. Xavier', 'Ms. Mereope Sharma')">
+            <div class="section-grade">Grade 10</div>
+            <div class="section-name">St. Xavier</div>
+        </div>
+    </div>
+</div>
+
+<!-- Section Detail Page -->
+<div id="sectionDetailPage" class="section-detail-page hidden">
+    <button class="back-button" onclick="backToMySections()">
+        <div class="back-icon">←</div>
+        <span id="sectionDetailTitle">10 - St. Xavier</span>
+    </button>
+
+    <div class="section-detail-container">
+        <div class="section-info-bar">
+            <div class="section-info-left">
+                <div class="section-info-item">
+                    <strong>Grade & Section:</strong> <span id="sectionInfoGrade">10 - Xavier</span>
+                </div>
+                <div class="section-info-item">
+                    <strong>Adviser:</strong> <span id="sectionInfoAdviser">Ms. Mereope Sharma</span>
+                </div>
+            </div>
+            <div class="section-quarter">Quarter 1</div>
+        </div>
+
+        <div class="roster-table-wrapper">
+            <table class="roster-table">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Guardian's Name</th>
+                        <th>Guardian's Number</th>
+                    </tr>
+                </thead>
+                <tbody id="rosterTableBody">
+                    <tr>
+                        <td>Juan</td>
+                        <td>Pablo</td>
+                        <td>Dela Cruz</td>
+                        <td>juan.delacruz@himc.edu.ph</td>
+                        <td>Maria Dela Cruz</td>
+                        <td>0917-123-4567</td>
+                    </tr>
+                    <tr>
+                        <td>Isabella</td>
+                        <td>Marie</td>
+                        <td>Santos</td>
+                        <td>isabella.santos@himc.edu.ph</td>
+                        <td>Roberto Santos</td>
+                        <td>0918-234-5678</td>
+                    </tr>
+                    <tr>
+                        <td>Clara</td>
+                        <td>Joy</td>
+                        <td>Mendoza</td>
+                        <td>clara.mendoza@himc.edu.ph</td>
+                        <td>Linda Mendoza</td>
+                        <td>0919-345-6789</td>
+                    </tr>
+                    <tr>
+                        <td>Vince</td>
+                        <td>Carlo</td>
+                        <td>Tolentino</td>
+                        <td>vince.tolentino@himc.edu.ph</td>
+                        <td>Carmen Tolentino</td>
+                        <td>0920-456-7890</td>
+                    </tr>
+                    <tr>
+                        <td>Miguel</td>
+                        <td>Angelo</td>
+                        <td>Rosales</td>
+                        <td>miguel.rosales@himc.edu.ph</td>
+                        <td>Jose Rosales</td>
+                        <td>0921-567-8901</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+        </main>
+    </div>
+    
+
+    <script>
+    // Page Navigation
+    // Update hideAllPages function
+// Update hideAllPages function to include new pages
+function hideAllPages() {
+    document.getElementById('dashboardHome').classList.add('hidden');
+    document.getElementById('addOffensePage').classList.add('hidden');
+    document.getElementById('manageOffensePage').classList.add('hidden');
+    document.getElementById('disciplinaryMeasuresPage').classList.add('hidden');
+    document.getElementById('offenseHistoryPage').classList.add('hidden');
+    document.getElementById('mySectionsPage').classList.add('hidden');
+    document.getElementById('sectionDetailPage').classList.add('hidden');
+}
+
+// Update viewMySections function
+function viewMySections() {
+    hideAllPages();
+    document.getElementById('mySectionsPage').classList.remove('hidden');
+    updateTopBar('📁', 'My Sections', '');
+    updateActiveNav(1);
+}
+
+// Add new function to view section detail
+function viewSectionDetail(grade, section, adviser) {
+    hideAllPages();
+    document.getElementById('sectionDetailPage').classList.remove('hidden');
+    
+    // Update the page title and info
+    document.getElementById('sectionDetailTitle').textContent = `${grade} - ${section}`;
+    document.getElementById('sectionInfoGrade').textContent = `${grade} - ${section}`;
+    document.getElementById('sectionInfoAdviser').textContent = adviser;
+    
+    updateTopBar('📁', `${grade} - ${section}`, '');
+    updateActiveNav(1);
+}
+
+// Add back to My Sections function
+function backToMySections() {
+    viewMySections();
+}
+
+// Update viewOffenseHistory function
+function viewOffenseHistory() {
+    hideAllPages();
+    document.getElementById('offenseHistoryPage').classList.remove('hidden');
+    updateTopBar('📋', 'Offense Report History', '');
+    updateActiveNav(1);
+}
+
+// Add search functionality (add this at the end of your script)
+document.addEventListener('DOMContentLoaded', function() {
+    const historySearch = document.getElementById('historySearch');
+    
+    if (historySearch) {
+        historySearch.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const table = document.querySelector('.history-table tbody');
+            const rows = table ? table.getElementsByTagName('tr') : [];
+            
+            for (let row of rows) {
+                const cells = row.getElementsByTagName('td');
+                let found = false;
+                
+                for (let cell of cells) {
+                    if (cell.textContent.toLowerCase().includes(searchTerm)) {
+                        found = true;
+                        break;
+                    }
+                }
+                
+                row.style.display = found ? '' : 'none';
+            }
+        });
+    }
+});
+
+    function updateTopBar(icon, title, subtitle) {
+        document.getElementById('pageIcon').textContent = icon;
+        document.getElementById('pageTitle').textContent = title;
+        const subtitleElement = document.getElementById('pageSubtitle');
+        if (subtitle) {
+            subtitleElement.textContent = subtitle;
+            subtitleElement.style.display = 'block';
+        } else {
+            subtitleElement.style.display = 'none';
+        }
+    }
+
+    function updateActiveNav(index) {
+        const navItems = document.querySelectorAll('.nav-item');
+        navItems.forEach((item, i) => {
+            if (i === index) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    function showDashboard() {
+        hideAllPages();
+        document.getElementById('dashboardHome').classList.remove('hidden');
+        updateTopBar('🏠', 'Dashboard', 'Welcome Back, Teacher!');
+        updateActiveNav(0);
+    }
+
+    function showManageOffense() {
+        hideAllPages();
+        document.getElementById('manageOffensePage').classList.remove('hidden');
+        updateTopBar('📁', 'Manage Offense', '');
+        updateActiveNav(1);
+    }
+
+    function reportOffense() {
+        hideAllPages();
+        document.getElementById('addOffensePage').classList.remove('hidden');
+        updateTopBar('⚠️', 'Add Offense', '');
+    }
+
+    function backToDashboard() {
+        showDashboard();
+    }
+
+    function backToManageOffense() {
+        showManageOffense();
+    }
+
+    function submitOffense(event) {
+        event.preventDefault();
+        alert('Offense reported successfully!');
+        document.getElementById('offenseForm').reset();
+        showDashboard();
+    }
+
+    function viewHistory() {
+        alert('Opening offense history...');
+    }
+
+    // Manage Offense Card Functions
+    function viewDisciplinaryMeasures() {
+        hideAllPages();
+        document.getElementById('disciplinaryMeasuresPage').classList.remove('hidden');
+        updateTopBar('📋', 'The HIMC Disciplinary Measures', '');
+        updateActiveNav(1);
+    }
+
+
+    
+    // Account Dropdown Functions
+    function toggleAccountDropdown(event) {
+        event.stopPropagation();
+        const dropdown = document.getElementById('accountDropdown');
+        dropdown.classList.toggle('show');
+    }
+
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('accountDropdown');
+        const userInfo = document.querySelector('.user-info');
+        
+        if (dropdown && userInfo && !userInfo.contains(event.target) && !dropdown.contains(event.target)) {
+            dropdown.classList.remove('show');
+        }
+    });
+
+    function editUsername(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const dropdown = document.getElementById('accountDropdown');
+        dropdown.classList.remove('show');
+        
+        const currentName = document.querySelector('.user-name').textContent;
+        const newName = prompt('Enter new username:', currentName);
+        
+        if (newName && newName.trim() !== '') {
+            document.querySelector('.user-name').textContent = newName;
+            document.querySelector('.dropdown-user-title').textContent = newName;
+            alert('Username updated successfully!');
+        }
+    }
+
+    function changePassword(event) {
+        event.preventDefault();
+        event.stopPropagation();
+        const dropdown = document.getElementById('accountDropdown');
+        dropdown.classList.remove('show');
+        
+        const currentPassword = prompt('Enter current password:');
+        
+        if (currentPassword === '12345') {
+            const newPassword = prompt('Enter new password:');
+            const confirmPassword = prompt('Confirm new password:');
+            
+            if (newPassword && newPassword === confirmPassword) {
+                alert('Password changed successfully!');
+            } else {
+                alert('Passwords do not match!');
+            }
+        } else {
+            alert('Incorrect current password!');
+        }
+    }
+
+  function logout(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    // Close the dropdown first
+    const dropdown = document.getElementById('accountDropdown');
+    if (dropdown) {
+        dropdown.classList.remove('show');
+    }
+    
+    // Redirect to the login page immediately
+    window.location.href = 'https://d-oview.vercel.app/';
+}
+</script>
+</body>
+</html>
