@@ -1748,6 +1748,40 @@
     
 
     <script>
+
+(function initTeacherSession() {
+        const params = new URLSearchParams(window.location.search);
+
+        if (params.get('id')) {
+            sessionStorage.setItem('teacher_id',    params.get('id'));
+            sessionStorage.setItem('teacher_name',  decodeURIComponent(params.get('name')  || ''));
+            sessionStorage.setItem('teacher_email', decodeURIComponent(params.get('email') || ''));
+
+            const cleanUrl = window.location.pathname;
+            window.history.replaceState({}, document.title, cleanUrl);
+        }
+
+        if (!sessionStorage.getItem('teacher_id')) {
+            window.location.href = 'https://login-topaz-iota.vercel.app/';
+            return;
+        }
+
+        const name  = sessionStorage.getItem('teacher_name');
+        const email = sessionStorage.getItem('teacher_email');
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameEl  = document.querySelector('.user-name');
+            const emailEl = document.querySelector('.user-email');
+            if (nameEl)  nameEl.textContent  = name;
+            if (emailEl) emailEl.textContent = email;
+
+            const dropNameEl  = document.querySelector('.dropdown-user-title');
+            const dropEmailEl = document.querySelector('.dropdown-user-email');
+            if (dropNameEl)  dropNameEl.textContent  = name;
+            if (dropEmailEl) dropEmailEl.textContent = email;
+        });
+    })();
+        
     // Page Navigation
     // Update hideAllPages function
 // Update hideAllPages function to include new pages
@@ -1953,13 +1987,10 @@ document.addEventListener('DOMContentLoaded', function() {
     event.preventDefault();
     event.stopPropagation();
     
-    // Close the dropdown first
-    const dropdown = document.getElementById('accountDropdown');
-    if (dropdown) {
-        dropdown.classList.remove('show');
-    }
+    sessionStorage.removeItem('teacher_id');
+    sessionStorage.removeItem('teacher_name');
+    sessionStorage.removeItem('teacher_email');
     
-    // Redirect to the login page immediately
     window.location.href = 'https://login-topaz-iota.vercel.app/';
 }
 </script>
