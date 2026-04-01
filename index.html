@@ -699,20 +699,19 @@ async function loadTeacherSections() {
     grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">Loading sections…</div>`;
     try {
         const tid  = getTeacherId();
-        // sections where this teacher is the adviser
         const res  = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
         const data = await res.json();
-        const data = await res.json();
-// Filter client-side as a safety net
-const mySections = (data.sections || []).filter(
-    sec => String(sec.adviser_id) === String(tid)
-);
-        
-        if (!data.success || !data.sections.length) {
+
+        // Filter client-side as a safety net
+        const mySections = (data.sections || []).filter(
+            sec => String(sec.adviser_id) === String(tid)
+        );
+
+        if (!data.success || !mySections.length) {
             grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">No sections assigned.</div>`;
             return;
         }
-        grid.innerHTML = data.sections.map(sec => `
+        grid.innerHTML = mySections.map(sec => `
             <div class="section-card"
                  onclick="viewSectionDetail('${escJs(sec.grade_level)}','${escJs(sec.section_name)}','${escJs(sec.adviser_name||getTeacherName())}',${sec.section_id})">
                 <div class="section-grade">${escHtml(sec.grade_level)}</div>
