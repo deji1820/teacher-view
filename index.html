@@ -150,6 +150,7 @@
         /* My Sections */
         .my-sections-page { padding: 40px; flex: 1; overflow-y: auto; }
         .sections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; }
+        .sections-loading { color: #aaa; font-size: 16px; padding: 40px 0; }
         .section-card { background: var(--dark-navy); border-radius: 16px; padding: 40px 30px; text-align: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .section-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); background: #2a2145; }
         .section-grade { font-size: 16px; font-weight: 500; color: var(--light-gold); margin-bottom: 10px; }
@@ -574,19 +575,11 @@
 
         <!-- ── MY SECTIONS ── -->
         <div id="mySectionsPage" class="my-sections-page hidden">
+            <button class="back-button" onclick="backToManageOffense()">
+                <div class="back-icon">←</div><span>My Sections</span>
+            </button>
             <div class="sections-grid" id="sectionsGrid">
-                <div class="section-card" onclick="viewSectionDetail('9','St. Kostka','Ms. Mereope Sharma')">
-                    <div class="section-grade">Grade 9</div><div class="section-name">St. Kostka</div>
-                </div>
-                <div class="section-card" onclick="viewSectionDetail('9','St. Ruiz','Ms. Mereope Sharma')">
-                    <div class="section-grade">Grade 9</div><div class="section-name">St. Ruiz</div>
-                </div>
-                <div class="section-card" onclick="viewSectionDetail('9','St. Pio','Ms. Mereope Sharma')">
-                    <div class="section-grade">Grade 9</div><div class="section-name">St. Pio</div>
-                </div>
-                <div class="section-card" onclick="viewSectionDetail('10','St. Xavier','Ms. Mereope Sharma')">
-                    <div class="section-grade">Grade 10</div><div class="section-name">St. Xavier</div>
-                </div>
+                <div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">Loading sections…</div>
             </div>
         </div>
 
@@ -609,11 +602,7 @@
                             <tr><th>First Name</th><th>Middle Name</th><th>Last Name</th><th>Email</th><th>Guardian's Name</th><th>Guardian's Number</th></tr>
                         </thead>
                         <tbody id="rosterTableBody">
-                            <tr><td>Juan</td><td>Pablo</td><td>Dela Cruz</td><td>juan.delacruz@himc.edu.ph</td><td>Maria Dela Cruz</td><td>0917-123-4567</td></tr>
-                            <tr><td>Isabella</td><td>Marie</td><td>Santos</td><td>isabella.santos@himc.edu.ph</td><td>Roberto Santos</td><td>0918-234-5678</td></tr>
-                            <tr><td>Clara</td><td>Joy</td><td>Mendoza</td><td>clara.mendoza@himc.edu.ph</td><td>Linda Mendoza</td><td>0919-345-6789</td></tr>
-                            <tr><td>Vince</td><td>Carlo</td><td>Tolentino</td><td>vince.tolentino@himc.edu.ph</td><td>Carmen Tolentino</td><td>0920-456-7890</td></tr>
-                            <tr><td>Miguel</td><td>Angelo</td><td>Rosales</td><td>miguel.rosales@himc.edu.ph</td><td>Jose Rosales</td><td>0921-567-8901</td></tr>
+                            <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading students…</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -697,21 +686,74 @@ function viewOffenseHistory() {
     loadOffenseHistory();
 }
 
-function viewMySections() {
+async function viewMySections() {
     hideAllPages();
     document.getElementById('mySectionsPage').classList.remove('hidden');
-    updateTopBar('📁','My Sections','');
+    updateTopBar('📁', 'My Sections', '');
     updateActiveNav(1);
+    await loadTeacherSections();
 }
 
-function viewSectionDetail(grade, section, adviser) {
+async function loadTeacherSections() {
+    const grid = document.getElementById('sectionsGrid');
+    grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">Loading sections…</div>`;
+    try {
+        const tid  = getTeacherId();
+        // sections where this teacher is the adviser
+        const res  = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
+        const data = await res.json();
+        if (!data.success || !data.sections.length) {
+            grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">No sections assigned.</div>`;
+            return;
+        }
+        grid.innerHTML = data.sections.map(sec => `
+            <div class="section-card"
+                 onclick="viewSectionDetail('${escJs(sec.grade_level)}','${escJs(sec.section_name)}','${escJs(sec.adviser_name||getTeacherName())}',${sec.section_id})">
+                <div class="section-grade">${escHtml(sec.grade_level)}</div>
+                <div class="section-name">${escHtml(sec.section_name)}</div>
+            </div>
+        `).join('');
+    } catch(err) {
+        console.error('loadTeacherSections:', err);
+        grid.innerHTML = `<div style="color:#dc3545;font-size:15px;padding:20px;grid-column:1/-1;">Failed to load sections.</div>`;
+    }
+}
+
+function viewSectionDetail(grade, section, adviser, sectionId) {
     hideAllPages();
     document.getElementById('sectionDetailPage').classList.remove('hidden');
-    document.getElementById('sectionDetailTitle').textContent  = `${grade} - ${section}`;
-    document.getElementById('sectionInfoGrade').textContent    = `${grade} - ${section}`;
-    document.getElementById('sectionInfoAdviser').textContent  = adviser;
+    document.getElementById('sectionDetailTitle').textContent = `${grade} - ${section}`;
+    document.getElementById('sectionInfoGrade').textContent   = `${grade} - ${section}`;
+    document.getElementById('sectionInfoAdviser').textContent = adviser;
     updateTopBar('📁', `${grade} - ${section}`, '');
     updateActiveNav(1);
+    loadSectionRoster(sectionId);
+}
+
+async function loadSectionRoster(sectionId) {
+    const tbody = document.getElementById('rosterTableBody');
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading students…</td></tr>`;
+    try {
+        const res  = await apiFetch(`${API_BASE}/get_students.php?section_id=${sectionId}`);
+        const data = await res.json();
+        if (!data.success || !data.students.length) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No students in this section.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = data.students.map(s => `
+            <tr>
+                <td>${escHtml(s.first_name  || '—')}</td>
+                <td>${escHtml(s.middle_name || '—')}</td>
+                <td>${escHtml(s.last_name   || '—')}</td>
+                <td>${escHtml(s.contact_email || '—')}</td>
+                <td>${escHtml(s.guardian_name  || '—')}</td>
+                <td>${escHtml(s.guardian_phone || s.contact_phone || '—')}</td>
+            </tr>
+        `).join('');
+    } catch(err) {
+        console.error('loadSectionRoster:', err);
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#dc3545;padding:20px;">Failed to load students.</td></tr>`;
+    }
 }
 
 function backToManageOffense() { showManageOffense(); }
@@ -944,32 +986,38 @@ async function submitViolation(e) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  RECENT REPORTS  (dashboard table)
+//  RECENT REPORTS  (dashboard table — only this teacher's)
 // ════════════════════════════════════════════════════════════
 async function loadRecentReports() {
     const tbody = document.getElementById('tbody-recent-reports');
     if (!tbody) return;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>`;
     try {
-        const tid  = getTeacherId();
-        const url  = tid ? `${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4` : `${API_BASE}/get_violations.php?limit=4`;
-        const res  = await apiFetch(url);
+        const tid = getTeacherId();
+        // Filter by this teacher's reports + limit to 4 most recent
+        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4`);
         const data = await res.json();
         if (!data.success || !data.violations.length) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No recent reports.</td></tr>`;
             return;
         }
-        tbody.innerHTML = data.violations.map(v => `
-            <tr>
+        tbody.innerHTML = data.violations.map(v => {
+            // Build grade & section from whatever fields the API returns
+            const gs = v.grade_section
+                || [v.grade_level, v.section_name].filter(Boolean).join(' - ')
+                || '—';
+            return `<tr>
                 <td>${escHtml(v.student_name)}</td>
-                <td>${escHtml(v.grade_section || '—')}</td>
+                <td>${escHtml(gs)}</td>
                 <td>${v.offense_level || '—'}</td>
                 <td>${escHtml(v.offense || '—')}</td>
                 <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
                 <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
-            </tr>
-        `).join('');
+            </tr>`;
+        }).join('');
     } catch(err) {
         console.error('loadRecentReports:', err);
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#dc3545;padding:20px;">Failed to load.</td></tr>`;
     }
 }
 
@@ -983,7 +1031,8 @@ async function loadOffenseHistory() {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>`;
     try {
         const tid  = getTeacherId();
-        const url  = tid ? `${API_BASE}/get_violations.php?teacher_id=${tid}` : `${API_BASE}/get_violations.php`;
+        // Always filter by this teacher — teachers should only see their own reports
+        const url  = `${API_BASE}/get_violations.php?teacher_id=${tid}`;
         const res  = await apiFetch(url);
         const data = await res.json();
         if (!data.success || !data.violations.length) {
