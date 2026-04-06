@@ -38,10 +38,8 @@
         .nav-item.active { background: rgba(212,166,80,0.15); border-left-color: var(--gold); font-weight: 500; }
         .nav-icon { font-size: 24px; width: 24px; text-align: center; }
 
-        /* Main content */
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: hidden; }
 
-        /* Top bar */
         .top-bar { background: var(--navy); padding: 20px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .page-title-section { display: flex; align-items: center; gap: 15px; }
         .page-icon { font-size: 32px; color: var(--gold); }
@@ -57,7 +55,6 @@
         .user-email { font-size: 12px; color: rgba(255,255,255,0.6); }
         .dropdown-arrow { color: var(--gold); font-size: 12px; }
 
-        /* Account Dropdown */
         .account-dropdown { position: absolute; top: 100%; right: 0; margin-top: 10px; background: var(--white); border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); min-width: 250px; z-index: 1000; opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.3s ease; }
         .account-dropdown.show { opacity: 1; visibility: visible; transform: translateY(0); }
         .dropdown-header { padding: 20px; border-bottom: 1px solid var(--light-gray); }
@@ -70,27 +67,22 @@
         .dropdown-menu-item.logout:hover { background: #fff5f5; }
         .dropdown-icon { font-size: 18px; width: 20px; text-align: center; }
 
-        /* Dashboard content */
         .dashboard-content { padding: 40px; flex: 1; overflow-y: auto; }
 
-        /* Stats */
         .stats-section { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 40px; }
         .stat-card { background: var(--dark-navy); border-radius: 16px; padding: 40px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .stat-title { font-size: 20px; font-weight: 600; color: var(--gold); margin-bottom: 15px; }
         .stat-value { font-size: 64px; font-weight: 700; color: var(--gold); }
 
-        /* Announcement */
         .announcement-banner { background: linear-gradient(135deg, #f5c563 0%, #d4a650 100%); border-radius: 12px; padding: 20px 30px; margin-bottom: 40px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(212,166,80,0.3); }
         .announcement-icon { font-size: 28px; }
         .announcement-text { flex: 1; font-size: 16px; color: var(--dark-navy); }
         .announcement-label { font-weight: 600; margin-right: 10px; }
 
-        /* Report Button */
         .button-container { display: flex; justify-content: flex-end; margin-bottom: 20px; }
         .report-button { padding: 14px 30px; background: var(--dark-navy); border: none; border-radius: 8px; color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
         .report-button:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,37,80,0.3); }
 
-        /* Reports section */
         .reports-section { background: var(--light-gray); border-radius: 12px; padding: 30px; }
         .reports-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
         .reports-title { font-size: 24px; font-weight: 600; color: var(--dark-navy); }
@@ -102,12 +94,10 @@
         .status-validated { color: #28a745; font-weight: 600; }
         .status-pending { color: #ffc107; font-weight: 600; }
 
-        /* Back button */
         .back-button { display: inline-flex; align-items: center; gap: 15px; background: var(--dark-navy); color: var(--white); border: none; border-radius: 50px; padding: 12px 30px 12px 12px; font-size: 20px; font-weight: 600; cursor: pointer; margin-bottom: 40px; transition: all 0.3s ease; }
         .back-button:hover { background: var(--navy); transform: translateX(-5px); }
         .back-icon { width: 50px; height: 50px; background: var(--dark-navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; color: var(--white); }
 
-        /* Manage Offense */
         .manage-offense-page { padding: 40px; flex: 1; overflow-y: auto; }
         .manage-offense-content { background: var(--light-gray); border-radius: 20px; padding: 50px; max-width: 1400px; }
         .manage-offense-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
@@ -115,31 +105,23 @@
         .manage-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); background: #2a2145; }
         .manage-card-title { font-size: 24px; font-weight: 600; color: var(--gold); line-height: 1.4; }
 
-        /* ── Disciplinary Measures — DYNAMIC (matches DO view) ── */
+        /* Disciplinary Measures — original layout */
         .disciplinary-measures-page { padding: 40px; flex: 1; overflow-y: auto; }
         .disciplinary-content { background: var(--light-gray); border-radius: 12px; padding: 40px; max-height: calc(100vh - 200px); overflow-y: auto; }
+        .disciplinary-header { display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
+        .disciplinary-title { font-size: 28px; font-weight: 700; color: var(--dark-navy); }
+        .offense-level-section { background: var(--white); border-radius: 12px; padding: 40px; margin-bottom: 30px; }
+        .offense-level-title { font-size: 24px; font-weight: 700; color: var(--dark-navy); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid var(--dark-navy); }
+        .offense-content { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 35px; }
+        .offense-list { list-style: none; }
+        .offense-list li { padding: 8px 0 8px 25px; position: relative; font-size: 15px; color: var(--dark-navy); line-height: 1.6; }
+        .offense-list li:before { content: "•"; position: absolute; left: 0; color: var(--dark-navy); font-weight: bold; font-size: 20px; }
+        .penalties-section { background: #f9f9f9; padding: 25px; border-radius: 8px; margin-top: 25px; }
+        .penalties-title { font-size: 20px; font-weight: 700; color: var(--dark-navy); margin-bottom: 15px; }
+        .penalties-list { list-style: none; }
+        .penalties-list li { padding: 8px 0 8px 25px; position: relative; font-size: 15px; color: var(--dark-navy); line-height: 1.6; }
+        .penalties-list li:before { content: "→"; position: absolute; left: 0; color: var(--dark-navy); font-weight: bold; }
 
-        /* DM Tabs */
-        .dm-tab {
-            padding: 14px 0; width: 120px; text-align: center;
-            border: 2px solid #ddd; background: #fff;
-            font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
-            color: var(--dark-navy); cursor: pointer; transition: all 0.2s;
-            border-radius: 0;
-        }
-        .dm-tab:first-child { border-radius: 8px 0 0 8px; }
-        .dm-tab:last-child  { border-radius: 0 8px 8px 0; }
-        .dm-tab.active { background: var(--gold); color: var(--dark-navy); border-color: var(--gold); font-weight: 700; }
-        .dm-tab:hover:not(.active) { background: #f5f5f5; }
-
-        /* Occurrence label badges */
-        .dm-occ-badge {
-            display: inline-block; padding: 2px 10px;
-            background: var(--dark-navy); color: var(--light-gold);
-            border-radius: 10px; font-size: 11px; font-weight: 700;
-        }
-
-        /* Offense Report History */
         .offense-history-page { padding: 40px; flex: 1; overflow-y: auto; }
         .history-container { background: var(--light-gray); border-radius: 12px; padding: 40px; }
         .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
@@ -153,7 +135,6 @@
         .history-table td { padding: 15px 12px; font-size: 13px; color: var(--dark-navy); border: 2px solid var(--dark-navy); text-align: center; }
         .history-table tbody tr:hover { background: #f9f9f9; }
 
-        /* My Sections */
         .my-sections-page { padding: 40px; flex: 1; overflow-y: auto; }
         .sections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; }
         .section-card { background: var(--dark-navy); border-radius: 16px; padding: 40px 30px; text-align: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
@@ -161,7 +142,6 @@
         .section-grade { font-size: 16px; font-weight: 500; color: var(--light-gold); margin-bottom: 10px; }
         .section-name { font-size: 28px; font-weight: 600; color: var(--gold); }
 
-        /* Section Detail */
         .section-detail-page { padding: 40px; flex: 1; overflow-y: auto; }
         .section-detail-container { background: var(--light-gray); border-radius: 12px; padding: 40px; }
         .section-info-bar { display: flex; justify-content: space-between; align-items: center; background: var(--white); padding: 20px 30px; border-radius: 8px; margin-bottom: 30px; }
@@ -203,7 +183,7 @@
         .av-reporter-input:focus { outline:none; border-color:var(--navy); background:var(--white); }
         .av-reporter-dropdown { position:absolute; top:100%; left:0; right:0; background:var(--white); border:2px solid var(--navy); border-top:none; border-radius:0 0 7px 7px; max-height:180px; overflow-y:auto; z-index:100; display:none; box-shadow:0 4px 12px rgba(0,0,0,0.1); }
         .av-reporter-dropdown.open { display:block; }
-        .av-reporter-option { padding:10px 14px; font-size:14px; color:var(--dark-navy); cursor:pointer; transition:background 0.15s; }
+        .av-reporter-option { padding:10px 14px; font-size:14px; color:var(--dark-navy); cursor:pointer; transition:background 0.15px; }
         .av-reporter-option:hover { background:var(--light-gray); }
         .av-reporter-option.no-match { color:#aaa; cursor:default; font-style:italic; }
         .av-form-error { color:#dc3545; font-size:13px; text-align:center; min-height:16px; width:100%; }
@@ -222,7 +202,6 @@
         .av-ref-offense-list li:before { content:"•"; position:absolute; left:0; color:var(--gold); font-size:14px; line-height:1.2; }
         .av-ref-divider { height:1px; background:rgba(212,166,80,0.2); margin:14px 0; }
 
-        /* Success modal */
         .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center; z-index:2000; backdrop-filter:blur(5px); }
         .success-modal { background:var(--light-gray); border-radius:12px; padding:50px 60px; max-width:500px; text-align:center; animation:modalFadeIn 0.4s ease-out; box-shadow:0 20px 60px rgba(0,0,0,0.3); }
         .success-icon { font-size:64px; margin-bottom:20px; }
@@ -233,7 +212,6 @@
 </head>
 <body>
 
-<!-- ══ TEACHER SESSION INIT ══════════════════════════════════ -->
 <script>
 (function initTeacherSession() {
     const params = new URLSearchParams(window.location.search);
@@ -307,7 +285,7 @@
                     </div>
                 </form>
             </div>
-            <!-- Reference panel — populated dynamically from DB -->
+            <!-- Reference panel — built from live DB data -->
             <div class="av-reference-section" id="avReferencePanel">
                 <div class="av-ref-title">Offense Level Reference</div>
                 <div style="color:rgba(245,197,99,0.5);font-size:12px;text-align:center;padding:20px 0;">Loading…</div>
@@ -327,8 +305,6 @@
 </div>
 
 <div class="dashboard">
-
-    <!-- ══ SIDEBAR ══════════════════════════════════════════ -->
     <aside class="sidebar">
         <div class="sidebar-header">
             <div class="sidebar-logo">
@@ -349,10 +325,7 @@
         </nav>
     </aside>
 
-    <!-- ══ MAIN CONTENT ══════════════════════════════════════ -->
     <main class="main-content">
-
-        <!-- Top Bar -->
         <div class="top-bar">
             <div class="page-title-section">
                 <div class="page-icon" id="pageIcon">🏠</div>
@@ -390,11 +363,11 @@
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-title">My Sections</div>
-                    <div class="stat-value" id="statMySections">—</div>
+                    <div class="stat-value">4</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-title">My Reports Today</div>
-                    <div class="stat-value" id="statMyReports">—</div>
+                    <div class="stat-title">Excused Today</div>
+                    <div class="stat-value">2</div>
                 </div>
             </div>
             <div class="announcement-banner">
@@ -416,13 +389,13 @@
                 </div>
                 <table class="reports-table">
                     <thead>
-                        <tr>
-                            <th>Name</th><th>Grade &amp; Section</th><th>Level</th>
-                            <th>Offense</th><th>Date Reported</th><th>Status</th>
-                        </tr>
+                        <tr><th>Name</th><th>Grade &amp; Section</th><th>Level</th><th>Offense</th><th>Date Reported</th><th>Status</th></tr>
                     </thead>
                     <tbody id="tbody-recent-reports">
-                        <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -445,46 +418,84 @@
             </div>
         </div>
 
-        <!-- ── DISCIPLINARY MEASURES — DYNAMIC ── -->
+        <!-- ── DISCIPLINARY MEASURES — original layout, dynamic content ── -->
         <div id="disciplinaryMeasuresPage" class="disciplinary-measures-page hidden">
             <button class="back-button" onclick="backToManageOffense()">
                 <div class="back-icon">←</div><span>The HIMC Disciplinary Measures</span>
             </button>
-
-            <!-- Tabs -->
-            <div style="display:flex;gap:0;margin-bottom:24px;justify-content:center;">
-                <button class="dm-tab active" id="dmTab1" onclick="switchDMTab(1)">Level 1</button>
-                <button class="dm-tab"        id="dmTab2" onclick="switchDMTab(2)">Level 2</button>
-                <button class="dm-tab"        id="dmTab3" onclick="switchDMTab(3)">Level 3</button>
-                <button class="dm-tab"        id="dmTab4" onclick="switchDMTab(4)">Level 4</button>
-            </div>
-
-            <!-- Level content -->
-            <div style="background:#f4f3f8;border-radius:12px;padding:30px;">
-                <h3 id="dmLevelTitle" style="font-size:18px;font-weight:600;color:var(--dark-navy);margin-bottom:20px;">Loading…</h3>
-
-                <!-- Offense list (read-only) -->
-                <div style="background:#fff;border-radius:10px;padding:24px;margin-bottom:20px;">
-                    <h4 style="font-size:15px;font-weight:600;color:var(--dark-navy);margin-bottom:14px;">Offense List:</h4>
-                    <ul id="dmOffenseList" style="list-style:none;padding:0;margin:0;"></ul>
+            <div class="disciplinary-content">
+                <div class="disciplinary-header">
+                    <h2 class="disciplinary-title">The HIMC Disciplinary Measures</h2>
                 </div>
 
-                <!-- Penalty rules (read-only) -->
-                <div style="background:#fff;border-radius:10px;padding:24px;">
-                    <h4 style="font-size:15px;font-weight:600;color:var(--dark-navy);margin-bottom:14px;">Penalty Rules:</h4>
-                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
-                        <thead>
-                            <tr style="background:#f8f8f8;">
-                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Occurrence</th>
-                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Demerits</th>
-                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Action</th>
-                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Extra Penalty</th>
-                            </tr>
-                        </thead>
-                        <tbody id="dmPenaltyTbody">
-                            <tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
-                        </tbody>
-                    </table>
+                <!-- LEVEL 1 — offense list populated from DB, penalties static -->
+                <div class="offense-level-section">
+                    <h3 class="offense-level-title">LEVEL 1 - Negligence to Fulfill Basic Duties</h3>
+                    <div class="offense-content">
+                        <ul class="offense-list" id="dmCol1a"></ul>
+                        <ul class="offense-list" id="dmCol1b"></ul>
+                    </div>
+                    <div class="penalties-section">
+                        <h4 class="penalties-title">Penalties for Level 1 Offenses</h4>
+                        <ul class="penalties-list" id="dmPenalty1">
+                            <li>1st Offense - Reminder + 1 demerit</li>
+                            <li>2nd Offense - Reminder + 2 demerits</li>
+                            <li>3rd Offense - Reprimand + 3 demerits</li>
+                            <li>4th Offense onwards - Parent Notification + 4 demerits</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- LEVEL 2 -->
+                <div class="offense-level-section">
+                    <h3 class="offense-level-title">LEVEL 2 - Minor Behavioral Infractions</h3>
+                    <div class="offense-content">
+                        <ul class="offense-list" id="dmCol2a"></ul>
+                        <ul class="offense-list" id="dmCol2b"></ul>
+                    </div>
+                    <div class="penalties-section">
+                        <h4 class="penalties-title">Penalties for Level 2 Offenses</h4>
+                        <ul class="penalties-list" id="dmPenalty2">
+                            <li>1st Offense - Reminder + 2 demerits</li>
+                            <li>2nd Offense - Reminder + 4 demerits</li>
+                            <li>3rd Offense - Reprimand + 6 demerits</li>
+                            <li>4th Offense onwards - Parent Notification + Deprivation + 8 demerits</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- LEVEL 3 -->
+                <div class="offense-level-section">
+                    <h3 class="offense-level-title">LEVEL 3 - Acts of Disrespect and Dishonesty</h3>
+                    <div class="offense-content">
+                        <ul class="offense-list" id="dmCol3a"></ul>
+                        <ul class="offense-list" id="dmCol3b"></ul>
+                    </div>
+                    <div class="penalties-section">
+                        <h4 class="penalties-title">Penalties for Level 3 Offenses</h4>
+                        <ul class="penalties-list" id="dmPenalty3">
+                            <li>1st Offense - Parent Notification + 3 demerits</li>
+                            <li>2nd Offense - Parent Notification + Deprivation + 6 demerits</li>
+                            <li>3rd Offense - Parent Notification + Prohibition + 9 demerits</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- LEVEL 4 -->
+                <div class="offense-level-section">
+                    <h3 class="offense-level-title">LEVEL 4 - Acts Unbecoming of an HIMC Student</h3>
+                    <div class="offense-content">
+                        <ul class="offense-list" id="dmCol4a"></ul>
+                        <ul class="offense-list" id="dmCol4b"></ul>
+                    </div>
+                    <div class="penalties-section">
+                        <h4 class="penalties-title">Penalties for Level 4 Offenses</h4>
+                        <ul class="penalties-list" id="dmPenalty4">
+                            <li>1st Offense - Parent Notification + 1 day suspension + 26 demerits</li>
+                            <li>2nd Offense - Parent Notification + 2 days suspension + Conduct probation + 26 demerits</li>
+                            <li>3rd Offense - Parent Notification + Removal from classes + warning + 26 demerits</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -506,10 +517,7 @@
                 <div class="history-table-wrapper">
                     <table class="history-table">
                         <thead>
-                            <tr>
-                                <th>Name</th><th>Offense</th><th>Level</th><th>Date</th>
-                                <th>Reported by</th><th>Remarks</th><th>Status</th>
-                            </tr>
+                            <tr><th>Name</th><th>Offense</th><th>Level</th><th>Date</th><th>Reported by</th><th>Remarks</th><th>Status</th></tr>
                         </thead>
                         <tbody id="tbody-offense-history">
                             <tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>
@@ -554,13 +562,10 @@
                 </div>
             </div>
         </div>
-
     </main>
 </div>
 
-<!-- ══ SCRIPTS ═══════════════════════════════════════════════ -->
 <script>
-// ── Config ──────────────────────────────────────────────────
 const API_BASE = 'https://tabularly-tactless-deloras.ngrok-free.dev';
 
 async function apiFetch(url, options = {}) {
@@ -571,7 +576,6 @@ async function apiFetch(url, options = {}) {
 function escHtml(s) { return s ? String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;') : ''; }
 function escJs(s)   { return s ? String(s).replace(/\\/g,'\\\\').replace(/'/g,"\\'") : ''; }
 
-// ── Session ──────────────────────────────────────────────────
 function getTeacherId()   { return sessionStorage.getItem('teacher_id'); }
 function getTeacherName() { return sessionStorage.getItem('teacher_name') || '—'; }
 function getTeacherEmail(){ return sessionStorage.getItem('teacher_email') || '—'; }
@@ -583,7 +587,6 @@ function applySessionToUI() {
     ['topbarEmail','dropdownEmail'].forEach(id => { const el=document.getElementById(id); if(el) el.textContent=email; });
 }
 
-// ── Navigation ───────────────────────────────────────────────
 function hideAllPages() {
     ['dashboardHome','manageOffensePage','disciplinaryMeasuresPage',
      'offenseHistoryPage','mySectionsPage','sectionDetailPage'
@@ -591,8 +594,8 @@ function hideAllPages() {
 }
 
 function updateTopBar(icon, title, subtitle) {
-    document.getElementById('pageIcon').textContent   = icon;
-    document.getElementById('pageTitle').textContent  = title;
+    document.getElementById('pageIcon').textContent  = icon;
+    document.getElementById('pageTitle').textContent = title;
     const sub = document.getElementById('pageSubtitle');
     sub.textContent   = subtitle || '';
     sub.style.display = subtitle ? 'block' : 'none';
@@ -608,7 +611,6 @@ function showDashboard() {
     updateTopBar('🏠','Dashboard','Welcome Back, ' + getTeacherName() + '!');
     updateActiveNav(0);
     loadRecentReports();
-    loadDashboardStats();
 }
 
 function showManageOffense() {
@@ -618,46 +620,45 @@ function showManageOffense() {
     updateActiveNav(1);
 }
 
-// ════════════════════════════════════════════════════════════
-//  DISCIPLINARY MEASURES — dynamic, same data source as DO view
-// ════════════════════════════════════════════════════════════
-let dmCurrentLevel  = 1;
-let dmOffenseData   = {};
-let dmPenaltyData   = {};
-let dmDataLoaded    = false;
+function backToManageOffense() { showManageOffense(); }
 
-const dmLevelNames = {
-    1: 'Level 1: Negligence to Fulfill Basic Duties',
-    2: 'Level 2: Minor Behavioral Infractions',
-    3: 'Level 3: Acts of Disrespect and Dishonesty',
-    4: 'Level 4: Acts Unbecoming of an HIMC Student'
-};
-const dmOccurrenceLabel = ['','1st','2nd','3rd','4th','5th'];
+// ════════════════════════════════════════════════════════════
+//  OFFENSE TYPES — shared between modal dropdown, reference
+//  panel, and Disciplinary Measures page offense lists
+// ════════════════════════════════════════════════════════════
+let offenseTypesByLevel = {}, offenseTypesLoaded = false;
 
-async function loadDisciplinaryMeasuresData() {
-    if (dmDataLoaded) return;
+async function loadOffenseTypes() {
+    if (offenseTypesLoaded) return;
     try {
-        // Offense types (with optional penalties embedded)
-        const r1   = await apiFetch(`${API_BASE}/get_offense_types.php?include_penalties=1`);
-        const d1   = await r1.json();
-        if (d1.success) {
-            dmOffenseData = d1.by_level || {};
+        const res  = await apiFetch(`${API_BASE}/get_offense_types.php`);
+        const data = await res.json();
+        if (data.success) {
+            offenseTypesByLevel = data.by_level || {};
+            offenseTypesLoaded  = true;
         }
-        if (d1.penalties_by_level) {
-            dmPenaltyData = d1.penalties_by_level;
-        } else {
-            // Hardcoded fallback — same as DO view
-            dmPenaltyData = {
-                1: [{occurrence:1,demerit:1,action:'Reminder',extra:''},{occurrence:2,demerit:2,action:'Reminder',extra:''},{occurrence:3,demerit:3,action:'Reprimand',extra:''},{occurrence:4,demerit:4,action:'Parent Notification',extra:''}],
-                2: [{occurrence:1,demerit:2,action:'Reminder',extra:''},{occurrence:2,demerit:4,action:'Reminder',extra:''},{occurrence:3,demerit:6,action:'Reprimand',extra:''},{occurrence:4,demerit:8,action:'Parent Notification',extra:'Deprivation from subject'}],
-                3: [{occurrence:1,demerit:3,action:'Parent Notification',extra:''},{occurrence:2,demerit:6,action:'Parent Notification',extra:'Deprivation from subject'},{occurrence:3,demerit:9,action:'Parent Notification',extra:'1 day suspension'}],
-                4: [{occurrence:1,demerit:26,action:'Parent Notification',extra:'1 day suspension'},{occurrence:2,demerit:26,action:'Parent Notification',extra:'2 days suspension + Conduct Probation'},{occurrence:3,demerit:26,action:'Parent Notification',extra:'Removal from classes + Warning'}]
-            };
+    } catch(err) { console.error('loadOffenseTypes:', err); }
+}
+
+// ── Render offense lists into the original static DM layout ──
+// Splits each level's offenses into two columns, exactly like the original
+function renderDMOffenseLists() {
+    [1, 2, 3, 4].forEach(lvl => {
+        const offenses = offenseTypesByLevel[lvl] || offenseTypesByLevel[String(lvl)] || [];
+        const colA = document.getElementById(`dmCol${lvl}a`);
+        const colB = document.getElementById(`dmCol${lvl}b`);
+        if (!colA || !colB) return;
+
+        if (!offenses.length) {
+            colA.innerHTML = `<li style="color:#aaa;font-style:italic;">No offenses defined.</li>`;
+            colB.innerHTML = '';
+            return;
         }
-        dmDataLoaded = true;
-    } catch(err) {
-        console.error('loadDisciplinaryMeasuresData:', err);
-    }
+
+        const half = Math.ceil(offenses.length / 2);
+        colA.innerHTML = offenses.slice(0, half).map(o => `<li>${escHtml(o.title || o)}</li>`).join('');
+        colB.innerHTML = offenses.slice(half).map(o => `<li>${escHtml(o.title || o)}</li>`).join('');
+    });
 }
 
 async function viewDisciplinaryMeasures() {
@@ -665,57 +666,261 @@ async function viewDisciplinaryMeasures() {
     document.getElementById('disciplinaryMeasuresPage').classList.remove('hidden');
     updateTopBar('📋','The HIMC Disciplinary Measures','');
     updateActiveNav(1);
-
-    // Reset tab to level 1
-    dmCurrentLevel = 1;
-    document.querySelectorAll('.dm-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
-
-    await loadDisciplinaryMeasuresData();
-    renderDMLevel(dmCurrentLevel);
+    await loadOffenseTypes();
+    renderDMOffenseLists();
 }
 
-function switchDMTab(level) {
-    dmCurrentLevel = level;
-    document.querySelectorAll('.dm-tab').forEach((t, i) => t.classList.toggle('active', i + 1 === level));
-    renderDMLevel(level);
-}
-
-function renderDMLevel(level) {
-    // Update level title — use DB name if available, else fallback
-    document.getElementById('dmLevelTitle').textContent = dmLevelNames[level] || `Level ${level}`;
-
-    // Offense list
-    const offenses = dmOffenseData[level] || dmOffenseData[String(level)] || [];
-    const ul = document.getElementById('dmOffenseList');
-    if (!offenses.length) {
-        ul.innerHTML = `<li style="color:#aaa;padding:8px 0;font-size:13px;">No offenses defined for this level.</li>`;
-    } else {
-        ul.innerHTML = offenses.map(o => `
-            <li style="padding:8px 0 8px 22px;position:relative;font-size:14px;color:var(--dark-navy);line-height:1.5;border-bottom:1px solid #f0f0f0;">
-                <span style="position:absolute;left:0;color:var(--dark-navy);font-weight:bold;font-size:18px;line-height:1.2;">•</span>
-                ${escHtml(o.title || o)}
-            </li>`).join('');
+// ── Add Violation — offense dropdown ─────────────────────────
+function updateOffenseOptions(level) {
+    const sel = document.getElementById('offenseOptions');
+    sel.innerHTML = '<option value="">Select Offense</option>';
+    if (!level) return;
+    const types = offenseTypesByLevel[level] || offenseTypesByLevel[String(level)] || [];
+    if (types.length) {
+        types.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t.offense_type_id; opt.textContent = t.title;
+            sel.appendChild(opt);
+        });
+        return;
     }
+    // Hardcoded fallback
+    const fb = {
+        '1':['Tardiness','Unexpected absences','Wearing inappropriate attire','Failure to submit correspondence','Sleeping in class','Violation of SOPs','Misbehavior','Improper haircut','No ID or No gate pass','Loitering during class hours','Littering','Trespassing','Disruption of classes'],
+        '2':['Any disruptive behavior/audio/video/material','Using vulgar language','Bringing of electronic gadgets','Staying after school hours','Putting temporary marks on body','Wearing make-up or nail polish','Fancy haircut or hair color','Unauthorized meetings/rallies','Vandalism'],
+        '3':['Any form of disrespect or malicious act','Tampering of school documents','Forgery / identity theft','Bringing cigarettes or lighter','Lending of IDs and gate pass','Cutting classes','Inflicting harm to self','Stealing or attempted theft','Bringing pornographic materials','Bringing gambling materials','Assault or threat to authority'],
+        '4':['Any form of cheating','Any kind of bullying','Violation of Data Privacy Act','Violation of Child Protection Policy','Threatening / harassment','Smoking / vaping','Extortion','Under influence of drugs or alcohol','Initiating fights or gambling','Backbiting or rumor mongering','Possession of deadly weapons']
+    };
+    (fb[level]||[]).forEach(o => {
+        const opt = document.createElement('option'); opt.value = o; opt.textContent = o; sel.appendChild(opt);
+    });
+}
 
-    // Penalty rules
-    const penalties = dmPenaltyData[level] || dmPenaltyData[String(level)] || [];
-    const tbody = document.getElementById('dmPenaltyTbody');
-    if (!penalties.length) {
-        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">No penalty rules defined.</td></tr>`;
-    } else {
-        tbody.innerHTML = penalties.map(p => `
-            <tr>
-                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">
-                    <span class="dm-occ-badge">${dmOccurrenceLabel[p.occurrence] || p.occurrence || '—'}</span>
-                </td>
-                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;font-weight:600;">${p.demerit ?? '—'}</td>
-                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">${escHtml(p.action || p.action_type || '—')}</td>
-                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">${escHtml(p.extra || p.notes || '—')}</td>
-            </tr>`).join('');
+// ── Reference panel (modal sidebar) — built from live DB data ─
+function buildReferencePanel() {
+    const panel = document.getElementById('avReferencePanel');
+    if (!panel) return;
+    const levelNames = {
+        1: 'Negligence to Fulfill Basic Duties',
+        2: 'Minor Behavioral Infractions',
+        3: 'Acts of Disrespect & Dishonesty',
+        4: 'Acts Unbecoming of an HIMC Student'
+    };
+    let html = `<div class="av-ref-title">Offense Level Reference</div>`;
+    [1, 2, 3, 4].forEach((lvl, i) => {
+        const offenses = offenseTypesByLevel[lvl] || offenseTypesByLevel[String(lvl)] || [];
+        html += `
+            <div class="av-ref-level">
+                <div class="av-ref-level-badge">Level ${lvl}</div>
+                <div class="av-ref-level-name">${levelNames[lvl]}</div>
+                <ul class="av-ref-offense-list">
+                    ${offenses.length
+                        ? offenses.map(o => `<li>${escHtml(o.title || o)}</li>`).join('')
+                        : '<li style="color:rgba(245,197,99,0.4);font-style:italic;">No offenses defined</li>'
+                    }
+                </ul>
+            </div>
+            ${i < 3 ? '<div class="av-ref-divider"></div>' : ''}`;
+    });
+    panel.innerHTML = html;
+}
+
+// ── Teacher typeahead ─────────────────────────────────────────
+let allTeachers = [], teachersLoaded = false;
+
+async function loadTeachers() {
+    if (teachersLoaded) return;
+    try {
+        const res  = await apiFetch(`${API_BASE}/get_teachers.php`);
+        const data = await res.json();
+        if (data.success) { allTeachers = data.teachers; teachersLoaded = true; }
+    } catch(err) { console.error('loadTeachers:', err); }
+}
+
+function openReporterDropdown() {
+    renderReporterDropdown(document.getElementById('avReporterInput').value);
+    document.getElementById('avReporterDropdown').classList.add('open');
+}
+function filterReporterDropdown(val) {
+    document.getElementById('avReporterTeacherId').value = '';
+    renderReporterDropdown(val);
+    document.getElementById('avReporterDropdown').classList.add('open');
+}
+function renderReporterDropdown(query) {
+    const dd = document.getElementById('avReporterDropdown');
+    const q  = (query||'').trim().toLowerCase();
+    const matches = q ? allTeachers.filter(t => t.full_name.toLowerCase().includes(q)) : allTeachers;
+    if (!matches.length) { dd.innerHTML = `<div class="av-reporter-option no-match">No teachers found</div>`; return; }
+    dd.innerHTML = matches.map(t =>
+        `<div class="av-reporter-option" onmousedown="selectReporter(${t.teacher_id},'${escJs(t.full_name)}')">${escHtml(t.full_name)}</div>`
+    ).join('');
+}
+function selectReporter(teacherId, fullName) {
+    document.getElementById('avReporterInput').value     = fullName;
+    document.getElementById('avReporterTeacherId').value = teacherId;
+    document.getElementById('avReporterDropdown').classList.remove('open');
+}
+document.addEventListener('click', function(e) {
+    const wrapper = document.querySelector('.av-reporter-wrapper');
+    if (wrapper && !wrapper.contains(e.target)) {
+        const dd = document.getElementById('avReporterDropdown');
+        if (dd) dd.classList.remove('open');
+    }
+});
+
+// ── Student ID lookup ─────────────────────────────────────────
+async function fetchStudentByNumber(num) {
+    try {
+        const res  = await apiFetch(`${API_BASE}/get_students.php?student_number=${encodeURIComponent(num)}`);
+        const data = await res.json();
+        return data.success && data.students.length ? data.students[0] : null;
+    } catch(err) { return null; }
+}
+
+function initStudentIdLookup() {
+    const input = document.getElementById('avStudentId');
+    const box   = document.getElementById('av-student-lookup-box');
+    if (!input || !box || input._wired) return;
+    input._wired = true;
+    let timer;
+    input.addEventListener('input', function() {
+        clearTimeout(timer);
+        const val = this.value.trim();
+        if (!val) { box.className='av-student-lookup-box empty'; box.textContent=''; return; }
+        box.className='av-student-lookup-box loading'; box.textContent='⏳ Looking up…';
+        timer = setTimeout(async () => {
+            const s = await fetchStudentByNumber(val);
+            if (s) {
+                const gs = [s.grade_level, s.section_name].filter(Boolean).join(' - ');
+                box.className = 'av-student-lookup-box found';
+                box.innerHTML = `✓ <strong>${escHtml(s.full_name_display)}</strong> &nbsp;|&nbsp; ${escHtml(gs)}`;
+            } else {
+                box.className = 'av-student-lookup-box not-found';
+                box.textContent = '✗ Student not found';
+            }
+        }, 400);
+    });
+}
+
+async function showAddViolation() {
+    document.getElementById('addViolationModal').classList.remove('hidden');
+    const today = new Date().toISOString().split('T')[0];
+    const di = document.getElementById('avOffenseDate');
+    if (di && !di.value) di.value = today;
+    initStudentIdLookup();
+
+    await Promise.all([loadOffenseTypes(), loadTeachers()]);
+
+    // Pre-fill reporter with the logged-in teacher
+    const repInput = document.getElementById('avReporterInput');
+    const repId    = document.getElementById('avReporterTeacherId');
+    if (repInput && !repInput.value) repInput.value = getTeacherName();
+    if (repId   && !repId.value)    repId.value    = getTeacherId();
+    renderReporterDropdown('');
+    buildReferencePanel();
+}
+
+function closeAddViolationModal() {
+    document.getElementById('addViolationModal').classList.add('hidden');
+    document.getElementById('violationModalForm').reset();
+    document.getElementById('offenseOptions').innerHTML = '<option value="">Select Level first</option>';
+    const lb = document.getElementById('av-student-lookup-box');
+    if (lb) { lb.className='av-student-lookup-box empty'; lb.textContent=''; }
+    const dd = document.getElementById('avReporterDropdown');
+    if (dd) dd.classList.remove('open');
+    document.getElementById('av-form-error').textContent = '';
+}
+
+async function submitViolation(e) {
+    e.preventDefault();
+    const errEl     = document.getElementById('av-form-error');
+    const submitBtn = document.getElementById('avSubmitBtn');
+    errEl.textContent = '';
+
+    const studentNumber = document.getElementById('avStudentId').value.trim();
+    const levelValue    = document.getElementById('avOffenseLevel').value;
+    const offenseSel    = document.getElementById('offenseOptions');
+    const offenseTypeId = offenseSel.value;
+    const dateOfOffense = document.getElementById('avOffenseDate').value;
+    const teacherId     = document.getElementById('avReporterTeacherId').value;
+    const description   = document.getElementById('avRemarks').value.trim();
+
+    if (!studentNumber)  { errEl.textContent='Please enter a Student ID.'; return; }
+    if (!levelValue)     { errEl.textContent='Please select a level.'; return; }
+    if (!offenseTypeId)  { errEl.textContent='Please select an offense.'; return; }
+    if (!dateOfOffense)  { errEl.textContent='Please select a date.'; return; }
+    if (!teacherId)      { errEl.textContent='Please select a reporter from the list.'; return; }
+
+    const lb = document.getElementById('av-student-lookup-box');
+    if (!lb.classList.contains('found')) { errEl.textContent='Student ID not recognized.'; return; }
+
+    submitBtn.disabled = true; submitBtn.textContent = 'Saving…';
+
+    try {
+        const res = await apiFetch(`${API_BASE}/add_violation.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                student_number:  studentNumber,
+                offense_type_id: parseInt(offenseTypeId),
+                offense_level:   parseInt(levelValue),
+                date_of_offense: dateOfOffense,
+                teacher_id:      parseInt(teacherId),
+                description,
+            }),
+        });
+        const data = await res.json();
+        if (data.success) {
+            closeAddViolationModal();
+            const ss = document.getElementById('successSanction');
+            if (ss) ss.innerHTML = `<strong>${escHtml(data.student_name)}</strong><br>Offense #${data.occurrence} · Level ${data.level}<br>Sanction: <strong>${escHtml(data.sanction)}</strong> · Demerits: <strong>${data.demerits}</strong>`;
+            document.getElementById('successModal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('successModal').classList.add('hidden'), 6000);
+            loadRecentReports();
+        } else {
+            errEl.textContent = data.message || 'Failed to save.';
+        }
+    } catch(err) {
+        console.error('submitViolation:', err);
+        errEl.textContent = 'Network error. Please try again.';
+    } finally {
+        submitBtn.disabled = false; submitBtn.textContent = 'Submit';
     }
 }
 
-// ── Offense History ──────────────────────────────────────────
+// ── Recent Reports ────────────────────────────────────────────
+async function loadRecentReports() {
+    const tbody = document.getElementById('tbody-recent-reports');
+    if (!tbody) return;
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>`;
+    try {
+        const tid  = getTeacherId();
+        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4`);
+        const data = await res.json();
+        if (!data.success || !data.violations.length) {
+            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No recent reports.</td></tr>`;
+            return;
+        }
+        tbody.innerHTML = data.violations.map(v => {
+            const gs = v.grade_section || [v.grade_level, v.section_name].filter(Boolean).join(' - ') || '—';
+            return `<tr>
+                <td>${escHtml(v.student_name)}</td>
+                <td>${escHtml(gs)}</td>
+                <td>${v.offense_level || '—'}</td>
+                <td>${escHtml(v.offense || '—')}</td>
+                <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
+                <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
+            </tr>`;
+        }).join('');
+    } catch(err) {
+        console.error('loadRecentReports:', err);
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#dc3545;padding:20px;">Failed to load.</td></tr>`;
+    }
+}
+
+// ── Offense History ───────────────────────────────────────────
+let historyData = [];
+
 function viewOffenseHistory() {
     hideAllPages();
     document.getElementById('offenseHistoryPage').classList.remove('hidden');
@@ -724,7 +929,69 @@ function viewOffenseHistory() {
     loadOffenseHistory();
 }
 
-// ── My Sections ──────────────────────────────────────────────
+async function loadOffenseHistory() {
+    const tbody = document.getElementById('tbody-offense-history');
+    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>`;
+    try {
+        const tid  = getTeacherId();
+        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}`);
+        const data = await res.json();
+        if (!data.success || !data.violations.length) {
+            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No offense reports found.</td></tr>`;
+            return;
+        }
+        historyData = data.violations;
+        populateDateDropdown(historyData);
+        renderHistoryTable(historyData);
+    } catch(err) {
+        console.error('loadOffenseHistory:', err);
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#dc3545;padding:30px;">Failed to load.</td></tr>`;
+    }
+}
+
+function populateDateDropdown(violations) {
+    const sel   = document.getElementById('historyDateSelect');
+    const dates = [...new Set(violations.map(v => v.reported_at ? v.reported_at.split(' ')[0] : null).filter(Boolean))].sort().reverse();
+    sel.innerHTML = '<option value="">All Dates</option>' + dates.map(d => `<option value="${d}">${d}</option>`).join('');
+}
+
+function renderHistoryTable(rows) {
+    const tbody = document.getElementById('tbody-offense-history');
+    if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No records match.</td></tr>`;
+        return;
+    }
+    tbody.innerHTML = rows.map(v => `
+        <tr>
+            <td>${escHtml(v.student_name)}</td>
+            <td>${escHtml(v.offense || '—')}</td>
+            <td>${v.offense_level || '—'}</td>
+            <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
+            <td>${escHtml(v.reporter_name || '—')}</td>
+            <td>${escHtml(v.remarks || 'N/A')}</td>
+            <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
+        </tr>
+    `).join('');
+}
+
+function filterHistoryTable(q) {
+    const term    = q.trim().toLowerCase();
+    const dateVal = document.getElementById('historyDateSelect').value;
+    renderHistoryTable(historyData.filter(v => {
+        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
+        return matchSearch && (!dateVal || (v.reported_at||'').startsWith(dateVal));
+    }));
+}
+
+function filterHistoryByDate(dateVal) {
+    const term = (document.getElementById('historySearch').value||'').trim().toLowerCase();
+    renderHistoryTable(historyData.filter(v => {
+        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
+        return matchSearch && (!dateVal || (v.reported_at||'').startsWith(dateVal));
+    }));
+}
+
+// ── My Sections ───────────────────────────────────────────────
 async function viewMySections() {
     hideAllPages();
     document.getElementById('mySectionsPage').classList.remove('hidden');
@@ -743,11 +1010,8 @@ async function loadTeacherSections() {
         const mySections = (data.sections || []).filter(sec => String(sec.adviser_id) === String(tid));
         if (!data.success || !mySections.length) {
             grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">No sections assigned.</div>`;
-            // Update stat card
-            document.getElementById('statMySections').textContent = '0';
             return;
         }
-        document.getElementById('statMySections').textContent = mySections.length;
         grid.innerHTML = mySections.map(sec => `
             <div class="section-card"
                  onclick="viewSectionDetail('${escJs(sec.grade_level)}','${escJs(sec.section_name)}','${escJs(sec.adviser_name||getTeacherName())}',${sec.section_id})">
@@ -798,31 +1062,7 @@ async function loadSectionRoster(sectionId) {
     }
 }
 
-function backToManageOffense() { showManageOffense(); }
-
-// ── Dashboard stats ──────────────────────────────────────────
-async function loadDashboardStats() {
-    try {
-        const tid  = getTeacherId();
-        const today = new Date().toISOString().split('T')[0];
-
-        // My reports today
-        const r1   = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&date=${today}`);
-        const d1   = await r1.json();
-        const todayCount = (d1.success && d1.violations) ? d1.violations.length : 0;
-        document.getElementById('statMyReports').textContent = todayCount;
-
-        // My sections count
-        const r2   = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
-        const d2   = await r2.json();
-        const mySections = (d2.sections || []).filter(s => String(s.adviser_id) === String(tid));
-        document.getElementById('statMySections').textContent = mySections.length || '0';
-    } catch(err) {
-        console.error('loadDashboardStats:', err);
-    }
-}
-
-// ── Account dropdown ─────────────────────────────────────────
+// ── Account dropdown ──────────────────────────────────────────
 function toggleAccountDropdown(e) {
     e.stopPropagation();
     document.getElementById('accountDropdown').classList.toggle('show');
@@ -840,361 +1080,12 @@ function logout(e) {
     window.location.href = 'https://login-topaz-iota.vercel.app/';
 }
 
-// ════════════════════════════════════════════════════════════
-//  ADD VIOLATION MODAL
-// ════════════════════════════════════════════════════════════
-let allTeachers = [], teachersLoaded = false;
-let offenseTypesByLevel = {}, offenseTypesLoaded = false;
-
-async function loadTeachers() {
-    if (teachersLoaded) return;
-    try {
-        const res  = await apiFetch(`${API_BASE}/get_teachers.php`);
-        const data = await res.json();
-        if (data.success) { allTeachers = data.teachers; teachersLoaded = true; }
-    } catch(err) { console.error('loadTeachers:', err); }
-}
-
-async function loadOffenseTypes() {
-    if (offenseTypesLoaded) return;
-    try {
-        const res  = await apiFetch(`${API_BASE}/get_offense_types.php`);
-        const data = await res.json();
-        if (data.success) {
-            offenseTypesByLevel = data.by_level || {};
-            offenseTypesLoaded = true;
-            // Also feed into dmOffenseData so DM page shares the same data
-            if (!dmDataLoaded) {
-                dmOffenseData = data.by_level || {};
-            }
-        }
-    } catch(err) { console.error('loadOffenseTypes:', err); }
-}
-
-function openReporterDropdown() {
-    renderReporterDropdown(document.getElementById('avReporterInput').value);
-    document.getElementById('avReporterDropdown').classList.add('open');
-}
-function filterReporterDropdown(val) {
-    document.getElementById('avReporterTeacherId').value = '';
-    renderReporterDropdown(val);
-    document.getElementById('avReporterDropdown').classList.add('open');
-}
-function renderReporterDropdown(query) {
-    const dd = document.getElementById('avReporterDropdown');
-    const q  = (query||'').trim().toLowerCase();
-    const matches = q ? allTeachers.filter(t => t.full_name.toLowerCase().includes(q)) : allTeachers;
-    if (!matches.length) { dd.innerHTML = `<div class="av-reporter-option no-match">No teachers found</div>`; return; }
-    dd.innerHTML = matches.map(t =>
-        `<div class="av-reporter-option" onmousedown="selectReporter(${t.teacher_id},'${escJs(t.full_name)}')">${escHtml(t.full_name)}</div>`
-    ).join('');
-}
-function selectReporter(teacherId, fullName) {
-    document.getElementById('avReporterInput').value     = fullName;
-    document.getElementById('avReporterTeacherId').value = teacherId;
-    document.getElementById('avReporterDropdown').classList.remove('open');
-}
-document.addEventListener('click', function(e) {
-    const wrapper = document.querySelector('.av-reporter-wrapper');
-    if (wrapper && !wrapper.contains(e.target)) {
-        const dd = document.getElementById('avReporterDropdown');
-        if (dd) dd.classList.remove('open');
-    }
-});
-
-async function fetchStudentByNumber(num) {
-    try {
-        const res  = await apiFetch(`${API_BASE}/get_students.php?student_number=${encodeURIComponent(num)}`);
-        const data = await res.json();
-        return data.success && data.students.length ? data.students[0] : null;
-    } catch(err) { return null; }
-}
-
-function initStudentIdLookup() {
-    const input = document.getElementById('avStudentId');
-    const box   = document.getElementById('av-student-lookup-box');
-    if (!input || !box || input._wired) return;
-    input._wired = true;
-    let timer;
-    input.addEventListener('input', function() {
-        clearTimeout(timer);
-        const val = this.value.trim();
-        if (!val) { box.className='av-student-lookup-box empty'; box.textContent=''; return; }
-        box.className='av-student-lookup-box loading'; box.textContent='⏳ Looking up…';
-        timer = setTimeout(async () => {
-            const s = await fetchStudentByNumber(val);
-            if (s) {
-                const gs = [s.grade_level, s.section_name].filter(Boolean).join(' - ');
-                box.className = 'av-student-lookup-box found';
-                box.innerHTML = `✓ <strong>${escHtml(s.full_name_display)}</strong> &nbsp;|&nbsp; ${escHtml(gs)}`;
-            } else {
-                box.className = 'av-student-lookup-box not-found';
-                box.textContent = '✗ Student not found';
-            }
-        }, 400);
-    });
-}
-
-function updateOffenseOptions(level) {
-    const sel = document.getElementById('offenseOptions');
-    sel.innerHTML = '<option value="">Select Offense</option>';
-    if (!level) return;
-    const types = offenseTypesByLevel[level] || offenseTypesByLevel[String(level)] || [];
-    if (types.length) {
-        types.forEach(t => {
-            const opt = document.createElement('option');
-            opt.value = t.offense_type_id;
-            opt.textContent = t.title;
-            sel.appendChild(opt);
-        });
-        return;
-    }
-    // Hardcoded fallback
-    const fb = {
-        '1':['Tardiness','Unexpected absences','Wearing inappropriate attire','Failure to submit correspondence','Sleeping in class','Violation of SOPs','Misbehavior','Improper haircut','No ID or No gate pass','Loitering during class hours','Littering','Trespassing','Disruption of classes'],
-        '2':['Any disruptive behavior/audio/video/material','Using vulgar language','Bringing of electronic gadgets','Staying after school hours','Putting temporary marks on body','Wearing make-up or nail polish','Fancy haircut or hair color','Unauthorized meetings/rallies','Vandalism'],
-        '3':['Any form of disrespect or malicious act','Tampering of school documents','Forgery / identity theft','Bringing cigarettes or lighter','Lending of IDs and gate pass','Cutting classes','Inflicting harm to self','Stealing or attempted theft','Bringing pornographic materials','Bringing gambling materials','Assault or threat to authority'],
-        '4':['Any form of cheating','Any kind of bullying','Violation of Data Privacy Act','Violation of Child Protection Policy','Threatening / harassment','Smoking / vaping','Extortion','Under influence of drugs or alcohol','Initiating fights or gambling','Backbiting or rumor mongering','Possession of deadly weapons']
-    };
-    (fb[level]||[]).forEach(o => {
-        const opt = document.createElement('option');
-        opt.value = o; opt.textContent = o;
-        sel.appendChild(opt);
-    });
-}
-
-// ── Build reference panel from DB data ───────────────────────
-function buildReferencePanel() {
-    const panel = document.getElementById('avReferencePanel');
-    if (!panel) return;
-
-    const levelNames = {
-        1: 'Negligence to Fulfill Basic Duties',
-        2: 'Minor Behavioral Infractions',
-        3: 'Acts of Disrespect & Dishonesty',
-        4: 'Acts Unbecoming of an HIMC Student'
-    };
-
-    let html = `<div class="av-ref-title">Offense Level Reference</div>`;
-    [1, 2, 3, 4].forEach((lvl, i) => {
-        const offenses = offenseTypesByLevel[lvl] || offenseTypesByLevel[String(lvl)] || [];
-        html += `
-            <div class="av-ref-level">
-                <div class="av-ref-level-badge">Level ${lvl}</div>
-                <div class="av-ref-level-name">${levelNames[lvl]}</div>
-                <ul class="av-ref-offense-list">
-                    ${offenses.length
-                        ? offenses.map(o => `<li>${escHtml(o.title || o)}</li>`).join('')
-                        : '<li style="color:rgba(245,197,99,0.4);font-style:italic;">No offenses defined</li>'
-                    }
-                </ul>
-            </div>
-            ${i < 3 ? '<div class="av-ref-divider"></div>' : ''}`;
-    });
-    panel.innerHTML = html;
-}
-
-async function showAddViolation() {
-    document.getElementById('addViolationModal').classList.remove('hidden');
-    const today = new Date().toISOString().split('T')[0];
-    const di = document.getElementById('avOffenseDate');
-    if (di && !di.value) di.value = today;
-    initStudentIdLookup();
-
-    await Promise.all([loadOffenseTypes(), loadTeachers()]);
-
-    // Pre-fill reporter with the logged-in teacher
-    const repInput = document.getElementById('avReporterInput');
-    const repId    = document.getElementById('avReporterTeacherId');
-    if (repInput && !repInput.value) repInput.value = getTeacherName();
-    if (repId   && !repId.value)    repId.value    = getTeacherId();
-    renderReporterDropdown('');
-
-    // Build the dynamic reference panel from live DB data
-    buildReferencePanel();
-}
-
-function closeAddViolationModal() {
-    document.getElementById('addViolationModal').classList.add('hidden');
-    document.getElementById('violationModalForm').reset();
-    document.getElementById('offenseOptions').innerHTML = '<option value="">Select Level first</option>';
-    const lb = document.getElementById('av-student-lookup-box');
-    if (lb) { lb.className='av-student-lookup-box empty'; lb.textContent=''; }
-    const dd = document.getElementById('avReporterDropdown');
-    if (dd) dd.classList.remove('open');
-    document.getElementById('av-form-error').textContent = '';
-}
-
-async function submitViolation(e) {
-    e.preventDefault();
-    const errEl     = document.getElementById('av-form-error');
-    const submitBtn = document.getElementById('avSubmitBtn');
-    errEl.textContent = '';
-
-    const studentNumber = document.getElementById('avStudentId').value.trim();
-    const levelValue    = document.getElementById('avOffenseLevel').value;
-    const offenseSel    = document.getElementById('offenseOptions');
-    const offenseTypeId = offenseSel.value;
-    const dateOfOffense = document.getElementById('avOffenseDate').value;
-    const teacherId     = document.getElementById('avReporterTeacherId').value;
-    const reporterName  = document.getElementById('avReporterInput').value.trim();
-    const description   = document.getElementById('avRemarks').value.trim();
-
-    if (!studentNumber)  { errEl.textContent='Please enter a Student ID.'; return; }
-    if (!levelValue)     { errEl.textContent='Please select a level.'; return; }
-    if (!offenseTypeId)  { errEl.textContent='Please select an offense.'; return; }
-    if (!dateOfOffense)  { errEl.textContent='Please select a date.'; return; }
-    if (!teacherId)      { errEl.textContent='Please select a reporter from the list.'; return; }
-
-    const lb = document.getElementById('av-student-lookup-box');
-    if (!lb.classList.contains('found')) { errEl.textContent='Student ID not recognized.'; return; }
-
-    submitBtn.disabled = true; submitBtn.textContent = 'Saving…';
-
-    try {
-        const res = await apiFetch(`${API_BASE}/add_violation.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                student_number:  studentNumber,
-                offense_type_id: parseInt(offenseTypeId),
-                offense_level:   parseInt(levelValue),
-                date_of_offense: dateOfOffense,
-                teacher_id:      parseInt(teacherId),
-                description,
-            }),
-        });
-        const data = await res.json();
-        if (data.success) {
-            closeAddViolationModal();
-            const ss = document.getElementById('successSanction');
-            if (ss) ss.innerHTML = `<strong>${escHtml(data.student_name)}</strong><br>Offense #${data.occurrence} · Level ${data.level}<br>Sanction: <strong>${escHtml(data.sanction)}</strong> · Demerits: <strong>${data.demerits}</strong>`;
-            document.getElementById('successModal').classList.remove('hidden');
-            setTimeout(() => document.getElementById('successModal').classList.add('hidden'), 6000);
-            loadRecentReports();
-        } else {
-            errEl.textContent = data.message || 'Failed to save.';
-        }
-    } catch(err) {
-        console.error('submitViolation:', err);
-        errEl.textContent = 'Network error. Please try again.';
-    } finally {
-        submitBtn.disabled = false; submitBtn.textContent = 'Submit';
-    }
-}
-
-// ════════════════════════════════════════════════════════════
-//  RECENT REPORTS
-// ════════════════════════════════════════════════════════════
-async function loadRecentReports() {
-    const tbody = document.getElementById('tbody-recent-reports');
-    if (!tbody) return;
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>`;
-    try {
-        const tid  = getTeacherId();
-        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4`);
-        const data = await res.json();
-        if (!data.success || !data.violations.length) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No recent reports.</td></tr>`;
-            return;
-        }
-        tbody.innerHTML = data.violations.map(v => {
-            const gs = v.grade_section || [v.grade_level, v.section_name].filter(Boolean).join(' - ') || '—';
-            return `<tr>
-                <td>${escHtml(v.student_name)}</td>
-                <td>${escHtml(gs)}</td>
-                <td>${v.offense_level || '—'}</td>
-                <td>${escHtml(v.offense || '—')}</td>
-                <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
-                <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
-            </tr>`;
-        }).join('');
-    } catch(err) {
-        console.error('loadRecentReports:', err);
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#dc3545;padding:20px;">Failed to load.</td></tr>`;
-    }
-}
-
-// ════════════════════════════════════════════════════════════
-//  OFFENSE HISTORY
-// ════════════════════════════════════════════════════════════
-let historyData = [];
-
-async function loadOffenseHistory() {
-    const tbody = document.getElementById('tbody-offense-history');
-    tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>`;
-    try {
-        const tid  = getTeacherId();
-        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}`);
-        const data = await res.json();
-        if (!data.success || !data.violations.length) {
-            tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No offense reports found.</td></tr>`;
-            return;
-        }
-        historyData = data.violations;
-        populateDateDropdown(historyData);
-        renderHistoryTable(historyData);
-    } catch(err) {
-        console.error('loadOffenseHistory:', err);
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#dc3545;padding:30px;">Failed to load.</td></tr>`;
-    }
-}
-
-function populateDateDropdown(violations) {
-    const sel = document.getElementById('historyDateSelect');
-    const dates = [...new Set(violations.map(v => v.reported_at ? v.reported_at.split(' ')[0] : null).filter(Boolean))].sort().reverse();
-    sel.innerHTML = '<option value="">All Dates</option>' + dates.map(d => `<option value="${d}">${d}</option>`).join('');
-}
-
-function renderHistoryTable(rows) {
-    const tbody = document.getElementById('tbody-offense-history');
-    if (!rows.length) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No records match.</td></tr>`;
-        return;
-    }
-    tbody.innerHTML = rows.map(v => `
-        <tr>
-            <td>${escHtml(v.student_name)}</td>
-            <td>${escHtml(v.offense || '—')}</td>
-            <td>${v.offense_level || '—'}</td>
-            <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
-            <td>${escHtml(v.reporter_name || '—')}</td>
-            <td>${escHtml(v.remarks || 'N/A')}</td>
-            <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
-        </tr>
-    `).join('');
-}
-
-function filterHistoryTable(q) {
-    const term     = q.trim().toLowerCase();
-    const dateVal  = document.getElementById('historyDateSelect').value;
-    const filtered = historyData.filter(v => {
-        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
-        const matchDate   = !dateVal || (v.reported_at||'').startsWith(dateVal);
-        return matchSearch && matchDate;
-    });
-    renderHistoryTable(filtered);
-}
-
-function filterHistoryByDate(dateVal) {
-    const term     = (document.getElementById('historySearch').value||'').trim().toLowerCase();
-    const filtered = historyData.filter(v => {
-        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
-        const matchDate   = !dateVal || (v.reported_at||'').startsWith(dateVal);
-        return matchSearch && matchDate;
-    });
-    renderHistoryTable(filtered);
-}
-
-// ════════════════════════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════════════════════════
+// ── Init ──────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
     applySessionToUI();
     showDashboard();
-    // Pre-load data in background so pages open instantly
     loadTeachers();
-    loadOffenseTypes();
+    loadOffenseTypes(); // pre-load in background so pages open instantly
 });
 </script>
 </body>
