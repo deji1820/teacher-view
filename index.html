@@ -669,12 +669,16 @@ function renderDMOffenseLists() {
                 ? `${occLabel} Offense onwards`
                 : `${occLabel} Offense`;
             const extra    = p.extra || p.notes || '';
-            const parts    = [
-                p.action || p.action_type || '',
-                extra     ? extra         : '',
-                `${p.demerit} demerit${p.demerit !== 1 ? 's' : ''}`,
-            ].filter(Boolean);
-            return `<li>${label} — ${parts.join(' + ')}</li>`;
+           const action      = (p.action || p.action_type || '').trim();
+const cleanAction = action.replace(/^\d+(st|nd|rd|th)\s+offense\s*[-–—]\s*/i, '').trim();
+const cleanExtra  = extra.replace(/^\d+(st|nd|rd|th)\s+offense\s*(onwards)?\s*[-–—]\s*/i, '').trim();
+
+const parts = [
+    cleanAction,
+    cleanExtra,
+    `${p.demerit} demerit${p.demerit !== 1 ? 's' : ''}`,
+].filter(Boolean);
+return `<li>${label} — ${parts.join(' + ')}</li>`;
         }).join('');
     });
 }
