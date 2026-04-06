@@ -22,7 +22,6 @@
         body { font-family: 'Outfit', sans-serif; height: 100vh; overflow: hidden; background: var(--light); }
         .hidden { display: none !important; }
 
-        /* ── Dashboard layout ── */
         .dashboard { display: flex; height: 100vh; background: var(--light); }
 
         /* Sidebar */
@@ -116,22 +115,29 @@
         .manage-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); background: #2a2145; }
         .manage-card-title { font-size: 24px; font-weight: 600; color: var(--gold); line-height: 1.4; }
 
-        /* Disciplinary Measures */
+        /* ── Disciplinary Measures — DYNAMIC (matches DO view) ── */
         .disciplinary-measures-page { padding: 40px; flex: 1; overflow-y: auto; }
         .disciplinary-content { background: var(--light-gray); border-radius: 12px; padding: 40px; max-height: calc(100vh - 200px); overflow-y: auto; }
-        .disciplinary-header { display: flex; justify-content: center; align-items: center; margin-bottom: 30px; }
-        .disciplinary-title { font-size: 28px; font-weight: 700; color: var(--dark-navy); }
-        .offense-level-section { background: var(--white); border-radius: 12px; padding: 40px; margin-bottom: 30px; }
-        .offense-level-title { font-size: 24px; font-weight: 700; color: var(--dark-navy); margin-bottom: 25px; padding-bottom: 15px; border-bottom: 3px solid var(--dark-navy); }
-        .offense-content { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 35px; }
-        .offense-list { list-style: none; }
-        .offense-list li { padding: 8px 0 8px 25px; position: relative; font-size: 15px; color: var(--dark-navy); line-height: 1.6; }
-        .offense-list li:before { content: "•"; position: absolute; left: 0; color: var(--dark-navy); font-weight: bold; font-size: 20px; }
-        .penalties-section { background: #f9f9f9; padding: 25px; border-radius: 8px; margin-top: 25px; }
-        .penalties-title { font-size: 20px; font-weight: 700; color: var(--dark-navy); margin-bottom: 15px; }
-        .penalties-list { list-style: none; }
-        .penalties-list li { padding: 8px 0 8px 25px; position: relative; font-size: 15px; color: var(--dark-navy); line-height: 1.6; }
-        .penalties-list li:before { content: "→"; position: absolute; left: 0; color: var(--dark-navy); font-weight: bold; }
+
+        /* DM Tabs */
+        .dm-tab {
+            padding: 14px 0; width: 120px; text-align: center;
+            border: 2px solid #ddd; background: #fff;
+            font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
+            color: var(--dark-navy); cursor: pointer; transition: all 0.2s;
+            border-radius: 0;
+        }
+        .dm-tab:first-child { border-radius: 8px 0 0 8px; }
+        .dm-tab:last-child  { border-radius: 0 8px 8px 0; }
+        .dm-tab.active { background: var(--gold); color: var(--dark-navy); border-color: var(--gold); font-weight: 700; }
+        .dm-tab:hover:not(.active) { background: #f5f5f5; }
+
+        /* Occurrence label badges */
+        .dm-occ-badge {
+            display: inline-block; padding: 2px 10px;
+            background: var(--dark-navy); color: var(--light-gold);
+            border-radius: 10px; font-size: 11px; font-weight: 700;
+        }
 
         /* Offense Report History */
         .offense-history-page { padding: 40px; flex: 1; overflow-y: auto; }
@@ -150,7 +156,6 @@
         /* My Sections */
         .my-sections-page { padding: 40px; flex: 1; overflow-y: auto; }
         .sections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; }
-        .sections-loading { color: #aaa; font-size: 16px; padding: 40px 0; }
         .section-card { background: var(--dark-navy); border-radius: 16px; padding: 40px 30px; text-align: center; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.2); min-height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .section-card:hover { transform: translateY(-8px); box-shadow: 0 12px 30px rgba(0,0,0,0.3); background: #2a2145; }
         .section-grade { font-size: 16px; font-weight: 500; color: var(--light-gold); margin-bottom: 10px; }
@@ -170,9 +175,7 @@
         .roster-table td { padding: 20px 15px; font-size: 13px; color: var(--dark-navy); border: 2px solid var(--dark-navy); text-align: center; }
         .roster-table tbody tr:hover { background: #f9f9f9; }
 
-        /* ══════════════════════════════════════════════════════════
-           ADD VIOLATION MODAL  (identical to DO view)
-        ══════════════════════════════════════════════════════════ */
+        /* Add Violation Modal */
         .av-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; z-index: 3000; backdrop-filter: blur(4px); }
         .av-modal { background: var(--white); border-radius: 14px; width: 92%; max-width: 900px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,0.35); animation: modalFadeIn 0.3s ease-out; }
         @keyframes modalFadeIn { from { opacity:0; transform:scale(0.95) translateY(-20px); } to { opacity:1; transform:scale(1) translateY(0); } }
@@ -190,15 +193,11 @@
         .av-form-textarea { width: 100%; padding: 10px 14px; background: var(--light-gray); border: 2px solid transparent; border-radius: 7px; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--dark-navy); resize: vertical; min-height: 80px; transition: border-color 0.2s; }
         .av-form-textarea:focus { outline: none; border-color: var(--navy); background: var(--white); }
         .av-form-textarea::placeholder { color: #bbb; font-style: italic; }
-
-        /* Student ID lookup box */
         .av-student-lookup-box { width:100%; margin-top:6px; padding:8px 12px; border-radius:7px; font-size:13px; font-weight:500; min-height:36px; display:flex; align-items:center; gap:8px; transition: all 0.2s; }
         .av-student-lookup-box.empty   { background:transparent; }
         .av-student-lookup-box.loading { background:#f0f4ff; color:#3d3567; border:1px solid #c0caf5; }
         .av-student-lookup-box.found   { background:#f0fff4; color:#276749; border:1px solid #9ae6b4; }
         .av-student-lookup-box.not-found { background:#fff5f5; color:#c53030; border:1px solid #fc8181; }
-
-        /* Reporter typeahead */
         .av-reporter-wrapper { position:relative; width:100%; }
         .av-reporter-input { width:100%; padding:10px 14px; background:var(--light-gray); border:2px solid transparent; border-radius:7px; font-family:'Outfit',sans-serif; font-size:14px; color:var(--dark-navy); transition:border-color 0.2s; }
         .av-reporter-input:focus { outline:none; border-color:var(--navy); background:var(--white); }
@@ -207,15 +206,11 @@
         .av-reporter-option { padding:10px 14px; font-size:14px; color:var(--dark-navy); cursor:pointer; transition:background 0.15s; }
         .av-reporter-option:hover { background:var(--light-gray); }
         .av-reporter-option.no-match { color:#aaa; cursor:default; font-style:italic; }
-
-        /* Form actions */
         .av-form-error { color:#dc3545; font-size:13px; text-align:center; min-height:16px; width:100%; }
         .av-form-actions { display:flex; flex-direction:column; align-items:flex-end; margin-top:10px; gap:4px; }
         .av-submit-btn { padding:12px 48px; background:var(--dark-navy); color:var(--gold); border:none; border-radius:8px; font-family:'Outfit',sans-serif; font-size:15px; font-weight:600; cursor:pointer; transition:all 0.2s; }
         .av-submit-btn:hover { background:var(--navy); transform:translateY(-1px); box-shadow:0 4px 14px rgba(45,37,80,0.3); }
         .av-submit-btn:disabled { opacity:0.7; cursor:not-allowed; transform:none; }
-
-        /* Reference panel */
         .av-reference-section { width:280px; flex-shrink:0; background:var(--dark-navy); padding:24px 20px; overflow-y:auto; }
         .av-ref-title { font-size:13px; font-weight:700; color:var(--gold); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:16px; }
         .av-ref-level { margin-bottom:16px; }
@@ -262,7 +257,6 @@
             <button class="av-modal-close" onclick="closeAddViolationModal()">✕</button>
         </div>
         <div class="av-modal-body">
-            <!-- Form -->
             <div class="av-form-section">
                 <form id="violationModalForm" onsubmit="submitViolation(event)">
                     <div class="av-form-row">
@@ -313,57 +307,10 @@
                     </div>
                 </form>
             </div>
-
-            <!-- Reference panel -->
-            <div class="av-reference-section">
+            <!-- Reference panel — populated dynamically from DB -->
+            <div class="av-reference-section" id="avReferencePanel">
                 <div class="av-ref-title">Offense Level Reference</div>
-                <div class="av-ref-level">
-                    <div class="av-ref-level-badge">Level 1</div>
-                    <div class="av-ref-level-name">Negligence to Fulfill Basic Duties</div>
-                    <ul class="av-ref-offense-list">
-                        <li>Tardiness</li><li>Unexpected absences</li><li>Wearing inappropriate attire</li>
-                        <li>Failure to submit correspondence</li><li>Sleeping in class</li>
-                        <li>Violation of SOPs</li><li>Misbehavior</li><li>Improper haircut</li>
-                        <li>No ID or No gate pass</li><li>Loitering during class hours</li>
-                        <li>Littering</li><li>Trespassing</li><li>Disruption of classes</li>
-                    </ul>
-                </div>
-                <div class="av-ref-divider"></div>
-                <div class="av-ref-level">
-                    <div class="av-ref-level-badge">Level 2</div>
-                    <div class="av-ref-level-name">Minor Behavioral Infractions</div>
-                    <ul class="av-ref-offense-list">
-                        <li>Any disruptive behavior/material</li><li>Using vulgar language</li>
-                        <li>Bringing electronic gadgets</li><li>Staying after school hours</li>
-                        <li>Putting temporary marks on body</li><li>Wearing make-up or nail polish</li>
-                        <li>Fancy haircut or hair color</li><li>Unauthorized meetings/rallies</li><li>Vandalism</li>
-                    </ul>
-                </div>
-                <div class="av-ref-divider"></div>
-                <div class="av-ref-level">
-                    <div class="av-ref-level-badge">Level 3</div>
-                    <div class="av-ref-level-name">Acts of Disrespect &amp; Dishonesty</div>
-                    <ul class="av-ref-offense-list">
-                        <li>Any form of disrespect or malicious act</li><li>Tampering of school documents</li>
-                        <li>Forgery / identity theft</li><li>Bringing cigarettes or lighter</li>
-                        <li>Lending of IDs and gate pass</li><li>Cutting classes</li>
-                        <li>Inflicting harm to self</li><li>Stealing or attempted theft</li>
-                        <li>Bringing pornographic materials</li><li>Bringing gambling materials</li>
-                        <li>Assault or threat to authority</li>
-                    </ul>
-                </div>
-                <div class="av-ref-divider"></div>
-                <div class="av-ref-level">
-                    <div class="av-ref-level-badge">Level 4</div>
-                    <div class="av-ref-level-name">Acts Unbecoming of an HIMC Student</div>
-                    <ul class="av-ref-offense-list">
-                        <li>Any form of cheating</li><li>Any kind of bullying</li>
-                        <li>Violation of Data Privacy Act</li><li>Violation of Child Protection Policy</li>
-                        <li>Threatening / harassment</li><li>Smoking / vaping</li><li>Extortion</li>
-                        <li>Under influence of drugs or alcohol</li><li>Initiating fights or gambling</li>
-                        <li>Backbiting or rumor mongering</li><li>Possession of deadly weapons</li>
-                    </ul>
-                </div>
+                <div style="color:rgba(245,197,99,0.5);font-size:12px;text-align:center;padding:20px 0;">Loading…</div>
             </div>
         </div>
     </div>
@@ -443,11 +390,11 @@
             <div class="stats-section">
                 <div class="stat-card">
                     <div class="stat-title">My Sections</div>
-                    <div class="stat-value">4</div>
+                    <div class="stat-value" id="statMySections">—</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-title">Excused Today</div>
-                    <div class="stat-value">2</div>
+                    <div class="stat-title">My Reports Today</div>
+                    <div class="stat-value" id="statMyReports">—</div>
                 </div>
             </div>
             <div class="announcement-banner">
@@ -475,10 +422,7 @@
                         </tr>
                     </thead>
                     <tbody id="tbody-recent-reports">
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-                        <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                        <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
                     </tbody>
                 </table>
             </div>
@@ -501,44 +445,46 @@
             </div>
         </div>
 
-        <!-- ── DISCIPLINARY MEASURES ── -->
+        <!-- ── DISCIPLINARY MEASURES — DYNAMIC ── -->
         <div id="disciplinaryMeasuresPage" class="disciplinary-measures-page hidden">
             <button class="back-button" onclick="backToManageOffense()">
                 <div class="back-icon">←</div><span>The HIMC Disciplinary Measures</span>
             </button>
-            <div class="disciplinary-content">
-                <div class="disciplinary-header"><h2 class="disciplinary-title">The HIMC Disciplinary Measures</h2></div>
-                <div class="offense-level-section">
-                    <h3 class="offense-level-title">LEVEL 1 - Negligence to Fulfill Basic Duties</h3>
-                    <div class="offense-content">
-                        <ul class="offense-list"><li>Tardiness</li><li>Unexpected absences</li><li>Wearing inappropriate attire</li><li>Failure to submit correspondence / have materials a 3rd time</li><li>Sleeping in class</li><li>Violation of SOP's</li></ul>
-                        <ul class="offense-list"><li>Misbehavior</li><li>Improper haircut</li><li>No ID or No gate pass</li><li>Loitering during class hours</li><li>Littering</li><li>Trespassing</li><li>Disruption of classes.</li></ul>
-                    </div>
-                    <div class="penalties-section"><h4 class="penalties-title">Penalties for Level 1 Offenses</h4><ul class="penalties-list"><li>1st Offense - Reminder + 1 demerit</li><li>2nd Offense - Reminder + 2 demerits</li><li>3rd Offense - Reprimand + 3 demerits</li><li>4th Offense onwards - Parent Notification + 4 demerits</li></ul></div>
+
+            <!-- Tabs -->
+            <div style="display:flex;gap:0;margin-bottom:24px;justify-content:center;">
+                <button class="dm-tab active" id="dmTab1" onclick="switchDMTab(1)">Level 1</button>
+                <button class="dm-tab"        id="dmTab2" onclick="switchDMTab(2)">Level 2</button>
+                <button class="dm-tab"        id="dmTab3" onclick="switchDMTab(3)">Level 3</button>
+                <button class="dm-tab"        id="dmTab4" onclick="switchDMTab(4)">Level 4</button>
+            </div>
+
+            <!-- Level content -->
+            <div style="background:#f4f3f8;border-radius:12px;padding:30px;">
+                <h3 id="dmLevelTitle" style="font-size:18px;font-weight:600;color:var(--dark-navy);margin-bottom:20px;">Loading…</h3>
+
+                <!-- Offense list (read-only) -->
+                <div style="background:#fff;border-radius:10px;padding:24px;margin-bottom:20px;">
+                    <h4 style="font-size:15px;font-weight:600;color:var(--dark-navy);margin-bottom:14px;">Offense List:</h4>
+                    <ul id="dmOffenseList" style="list-style:none;padding:0;margin:0;"></ul>
                 </div>
-                <div class="offense-level-section">
-                    <h3 class="offense-level-title">LEVEL 2 - Minor Behavioral Infractions</h3>
-                    <div class="offense-content">
-                        <ul class="offense-list"><li>Any disruptive behavior/audio/video/material</li><li>Using vulgar language or indecent publication</li><li>Bringing of electronic gadgets</li><li>Staying in the school premises after school hours</li></ul>
-                        <ul class="offense-list"><li>Putting temporary marks on their bodies</li><li>Putting on make-up or colored nail polish</li><li>Fancy haircut or loud hair color</li><li>Holding unauthorized meetings or rallies</li><li>Vandalism</li></ul>
-                    </div>
-                    <div class="penalties-section"><h4 class="penalties-title">Penalties for Level 2 Offenses</h4><ul class="penalties-list"><li>1st Offense - Reminder + 2 demerit</li><li>2nd Offense - Reminder + 4 demerits</li><li>3rd Offense - Reprimand + 6 demerits</li><li>4th Offense onwards - Parent Notification + Deprivation + 8 demerits</li></ul></div>
-                </div>
-                <div class="offense-level-section">
-                    <h3 class="offense-level-title">LEVEL 3 - Acts of Disrespect and Dishonesty</h3>
-                    <div class="offense-content">
-                        <ul class="offense-list"><li>Any form of disrespect or malicious act</li><li>Tampering of any school document/property</li><li>Any form of dishonesty (forgery, identity theft)</li><li>Bringing of cigarettes, lighter or matches</li></ul>
-                        <ul class="offense-list"><li>Lending of ID's and gate pass</li><li>Cutting classes</li><li>Inflicting of harm to himself/herself</li><li>Stealing or attempted theft</li><li>Bringing pornographic materials</li><li>Bringing of gambling materials</li><li>Assault or threat to a person in authority</li></ul>
-                    </div>
-                    <div class="penalties-section"><h4 class="penalties-title">Penalties for Level 3 Offenses</h4><ul class="penalties-list"><li>1st Offense - Parent Notification + 3 demerits</li><li>2nd Offense - Parent Notification + Deprivation + 6 demerits</li><li>3rd Offense - Parent Notification + Prohibition + 9 demerits</li></ul></div>
-                </div>
-                <div class="offense-level-section">
-                    <h3 class="offense-level-title">LEVEL 4 - Acts of Unbecoming of an HIMC Student</h3>
-                    <div class="offense-content">
-                        <ul class="offense-list"><li>Any form of cheating</li><li>Any kind of bullying</li><li>Violation of the Data Privacy Act</li><li>Violation of the HIMC Child Protection Policy</li><li>Threatening/Harassment of any individual</li></ul>
-                        <ul class="offense-list"><li>Smoking cigarettes / vaping, extortion, under influence of drugs or alcohol, initiating fights or gambling, backbiting or rumor mongering</li><li>Possession of deadly weapons</li></ul>
-                    </div>
-                    <div class="penalties-section"><h4 class="penalties-title">Penalties for Level 4 Offenses</h4><ul class="penalties-list"><li>1st Offense - Parent Notification + 1 day suspension + 26 demerits</li><li>2nd Offense - Parent Notification + 2 days suspension + Conduct probation + 26 demerits</li><li>3rd Offense - Parent Notification + Removal from classes + warning + 26 demerits</li></ul></div>
+
+                <!-- Penalty rules (read-only) -->
+                <div style="background:#fff;border-radius:10px;padding:24px;">
+                    <h4 style="font-size:15px;font-weight:600;color:var(--dark-navy);margin-bottom:14px;">Penalty Rules:</h4>
+                    <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                        <thead>
+                            <tr style="background:#f8f8f8;">
+                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Occurrence</th>
+                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Demerits</th>
+                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Action</th>
+                                <th style="padding:10px 14px;text-align:center;font-weight:600;color:var(--dark-navy);border:1px solid #e0e0e0;">Extra Penalty</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dmPenaltyTbody">
+                            <tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -662,6 +608,7 @@ function showDashboard() {
     updateTopBar('🏠','Dashboard','Welcome Back, ' + getTeacherName() + '!');
     updateActiveNav(0);
     loadRecentReports();
+    loadDashboardStats();
 }
 
 function showManageOffense() {
@@ -671,13 +618,104 @@ function showManageOffense() {
     updateActiveNav(1);
 }
 
-function viewDisciplinaryMeasures() {
+// ════════════════════════════════════════════════════════════
+//  DISCIPLINARY MEASURES — dynamic, same data source as DO view
+// ════════════════════════════════════════════════════════════
+let dmCurrentLevel  = 1;
+let dmOffenseData   = {};
+let dmPenaltyData   = {};
+let dmDataLoaded    = false;
+
+const dmLevelNames = {
+    1: 'Level 1: Negligence to Fulfill Basic Duties',
+    2: 'Level 2: Minor Behavioral Infractions',
+    3: 'Level 3: Acts of Disrespect and Dishonesty',
+    4: 'Level 4: Acts Unbecoming of an HIMC Student'
+};
+const dmOccurrenceLabel = ['','1st','2nd','3rd','4th','5th'];
+
+async function loadDisciplinaryMeasuresData() {
+    if (dmDataLoaded) return;
+    try {
+        // Offense types (with optional penalties embedded)
+        const r1   = await apiFetch(`${API_BASE}/get_offense_types.php?include_penalties=1`);
+        const d1   = await r1.json();
+        if (d1.success) {
+            dmOffenseData = d1.by_level || {};
+        }
+        if (d1.penalties_by_level) {
+            dmPenaltyData = d1.penalties_by_level;
+        } else {
+            // Hardcoded fallback — same as DO view
+            dmPenaltyData = {
+                1: [{occurrence:1,demerit:1,action:'Reminder',extra:''},{occurrence:2,demerit:2,action:'Reminder',extra:''},{occurrence:3,demerit:3,action:'Reprimand',extra:''},{occurrence:4,demerit:4,action:'Parent Notification',extra:''}],
+                2: [{occurrence:1,demerit:2,action:'Reminder',extra:''},{occurrence:2,demerit:4,action:'Reminder',extra:''},{occurrence:3,demerit:6,action:'Reprimand',extra:''},{occurrence:4,demerit:8,action:'Parent Notification',extra:'Deprivation from subject'}],
+                3: [{occurrence:1,demerit:3,action:'Parent Notification',extra:''},{occurrence:2,demerit:6,action:'Parent Notification',extra:'Deprivation from subject'},{occurrence:3,demerit:9,action:'Parent Notification',extra:'1 day suspension'}],
+                4: [{occurrence:1,demerit:26,action:'Parent Notification',extra:'1 day suspension'},{occurrence:2,demerit:26,action:'Parent Notification',extra:'2 days suspension + Conduct Probation'},{occurrence:3,demerit:26,action:'Parent Notification',extra:'Removal from classes + Warning'}]
+            };
+        }
+        dmDataLoaded = true;
+    } catch(err) {
+        console.error('loadDisciplinaryMeasuresData:', err);
+    }
+}
+
+async function viewDisciplinaryMeasures() {
     hideAllPages();
     document.getElementById('disciplinaryMeasuresPage').classList.remove('hidden');
     updateTopBar('📋','The HIMC Disciplinary Measures','');
     updateActiveNav(1);
+
+    // Reset tab to level 1
+    dmCurrentLevel = 1;
+    document.querySelectorAll('.dm-tab').forEach((t, i) => t.classList.toggle('active', i === 0));
+
+    await loadDisciplinaryMeasuresData();
+    renderDMLevel(dmCurrentLevel);
 }
 
+function switchDMTab(level) {
+    dmCurrentLevel = level;
+    document.querySelectorAll('.dm-tab').forEach((t, i) => t.classList.toggle('active', i + 1 === level));
+    renderDMLevel(level);
+}
+
+function renderDMLevel(level) {
+    // Update level title — use DB name if available, else fallback
+    document.getElementById('dmLevelTitle').textContent = dmLevelNames[level] || `Level ${level}`;
+
+    // Offense list
+    const offenses = dmOffenseData[level] || dmOffenseData[String(level)] || [];
+    const ul = document.getElementById('dmOffenseList');
+    if (!offenses.length) {
+        ul.innerHTML = `<li style="color:#aaa;padding:8px 0;font-size:13px;">No offenses defined for this level.</li>`;
+    } else {
+        ul.innerHTML = offenses.map(o => `
+            <li style="padding:8px 0 8px 22px;position:relative;font-size:14px;color:var(--dark-navy);line-height:1.5;border-bottom:1px solid #f0f0f0;">
+                <span style="position:absolute;left:0;color:var(--dark-navy);font-weight:bold;font-size:18px;line-height:1.2;">•</span>
+                ${escHtml(o.title || o)}
+            </li>`).join('');
+    }
+
+    // Penalty rules
+    const penalties = dmPenaltyData[level] || dmPenaltyData[String(level)] || [];
+    const tbody = document.getElementById('dmPenaltyTbody');
+    if (!penalties.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center;color:#aaa;padding:20px;">No penalty rules defined.</td></tr>`;
+    } else {
+        tbody.innerHTML = penalties.map(p => `
+            <tr>
+                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">
+                    <span class="dm-occ-badge">${dmOccurrenceLabel[p.occurrence] || p.occurrence || '—'}</span>
+                </td>
+                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;font-weight:600;">${p.demerit ?? '—'}</td>
+                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">${escHtml(p.action || p.action_type || '—')}</td>
+                <td style="padding:10px 14px;border:1px solid #e0e0e0;text-align:center;">${escHtml(p.extra || p.notes || '—')}</td>
+            </tr>`).join('');
+    }
+}
+
+// ── Offense History ──────────────────────────────────────────
 function viewOffenseHistory() {
     hideAllPages();
     document.getElementById('offenseHistoryPage').classList.remove('hidden');
@@ -686,6 +724,7 @@ function viewOffenseHistory() {
     loadOffenseHistory();
 }
 
+// ── My Sections ──────────────────────────────────────────────
 async function viewMySections() {
     hideAllPages();
     document.getElementById('mySectionsPage').classList.remove('hidden');
@@ -701,16 +740,14 @@ async function loadTeacherSections() {
         const tid  = getTeacherId();
         const res  = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
         const data = await res.json();
-
-        // Filter client-side as a safety net
-        const mySections = (data.sections || []).filter(
-            sec => String(sec.adviser_id) === String(tid)
-        );
-
+        const mySections = (data.sections || []).filter(sec => String(sec.adviser_id) === String(tid));
         if (!data.success || !mySections.length) {
             grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">No sections assigned.</div>`;
+            // Update stat card
+            document.getElementById('statMySections').textContent = '0';
             return;
         }
+        document.getElementById('statMySections').textContent = mySections.length;
         grid.innerHTML = mySections.map(sec => `
             <div class="section-card"
                  onclick="viewSectionDetail('${escJs(sec.grade_level)}','${escJs(sec.section_name)}','${escJs(sec.adviser_name||getTeacherName())}',${sec.section_id})">
@@ -763,6 +800,28 @@ async function loadSectionRoster(sectionId) {
 
 function backToManageOffense() { showManageOffense(); }
 
+// ── Dashboard stats ──────────────────────────────────────────
+async function loadDashboardStats() {
+    try {
+        const tid  = getTeacherId();
+        const today = new Date().toISOString().split('T')[0];
+
+        // My reports today
+        const r1   = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&date=${today}`);
+        const d1   = await r1.json();
+        const todayCount = (d1.success && d1.violations) ? d1.violations.length : 0;
+        document.getElementById('statMyReports').textContent = todayCount;
+
+        // My sections count
+        const r2   = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
+        const d2   = await r2.json();
+        const mySections = (d2.sections || []).filter(s => String(s.adviser_id) === String(tid));
+        document.getElementById('statMySections').textContent = mySections.length || '0';
+    } catch(err) {
+        console.error('loadDashboardStats:', err);
+    }
+}
+
 // ── Account dropdown ─────────────────────────────────────────
 function toggleAccountDropdown(e) {
     e.stopPropagation();
@@ -782,11 +841,10 @@ function logout(e) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  ADD VIOLATION MODAL  (exact same logic as DO view)
+//  ADD VIOLATION MODAL
 // ════════════════════════════════════════════════════════════
-
-// ── Teacher typeahead ────────────────────────────────────────
 let allTeachers = [], teachersLoaded = false;
+let offenseTypesByLevel = {}, offenseTypesLoaded = false;
 
 async function loadTeachers() {
     if (teachersLoaded) return;
@@ -795,6 +853,22 @@ async function loadTeachers() {
         const data = await res.json();
         if (data.success) { allTeachers = data.teachers; teachersLoaded = true; }
     } catch(err) { console.error('loadTeachers:', err); }
+}
+
+async function loadOffenseTypes() {
+    if (offenseTypesLoaded) return;
+    try {
+        const res  = await apiFetch(`${API_BASE}/get_offense_types.php`);
+        const data = await res.json();
+        if (data.success) {
+            offenseTypesByLevel = data.by_level || {};
+            offenseTypesLoaded = true;
+            // Also feed into dmOffenseData so DM page shares the same data
+            if (!dmDataLoaded) {
+                dmOffenseData = data.by_level || {};
+            }
+        }
+    } catch(err) { console.error('loadOffenseTypes:', err); }
 }
 
 function openReporterDropdown() {
@@ -828,7 +902,6 @@ document.addEventListener('click', function(e) {
     }
 });
 
-// ── Student ID live lookup ────────────────────────────────────
 async function fetchStudentByNumber(num) {
     try {
         const res  = await apiFetch(`${API_BASE}/get_students.php?student_number=${encodeURIComponent(num)}`);
@@ -862,23 +935,11 @@ function initStudentIdLookup() {
     });
 }
 
-// ── Offense types from DB ─────────────────────────────────────
-let offenseTypesByLevel = {}, offenseTypesLoaded = false;
-
-async function loadOffenseTypes() {
-    if (offenseTypesLoaded) return;
-    try {
-        const res  = await apiFetch(`${API_BASE}/get_offense_types.php`);
-        const data = await res.json();
-        if (data.success) { offenseTypesByLevel = data.by_level || {}; offenseTypesLoaded = true; }
-    } catch(err) { console.error('loadOffenseTypes:', err); }
-}
-
 function updateOffenseOptions(level) {
     const sel = document.getElementById('offenseOptions');
     sel.innerHTML = '<option value="">Select Offense</option>';
     if (!level) return;
-    const types = offenseTypesByLevel[level] || [];
+    const types = offenseTypesByLevel[level] || offenseTypesByLevel[String(level)] || [];
     if (types.length) {
         types.forEach(t => {
             const opt = document.createElement('option');
@@ -888,7 +949,7 @@ function updateOffenseOptions(level) {
         });
         return;
     }
-    // Fallback hardcoded
+    // Hardcoded fallback
     const fb = {
         '1':['Tardiness','Unexpected absences','Wearing inappropriate attire','Failure to submit correspondence','Sleeping in class','Violation of SOPs','Misbehavior','Improper haircut','No ID or No gate pass','Loitering during class hours','Littering','Trespassing','Disruption of classes'],
         '2':['Any disruptive behavior/audio/video/material','Using vulgar language','Bringing of electronic gadgets','Staying after school hours','Putting temporary marks on body','Wearing make-up or nail polish','Fancy haircut or hair color','Unauthorized meetings/rallies','Vandalism'],
@@ -902,22 +963,55 @@ function updateOffenseOptions(level) {
     });
 }
 
-// ── Open / close modal ────────────────────────────────────────
+// ── Build reference panel from DB data ───────────────────────
+function buildReferencePanel() {
+    const panel = document.getElementById('avReferencePanel');
+    if (!panel) return;
+
+    const levelNames = {
+        1: 'Negligence to Fulfill Basic Duties',
+        2: 'Minor Behavioral Infractions',
+        3: 'Acts of Disrespect & Dishonesty',
+        4: 'Acts Unbecoming of an HIMC Student'
+    };
+
+    let html = `<div class="av-ref-title">Offense Level Reference</div>`;
+    [1, 2, 3, 4].forEach((lvl, i) => {
+        const offenses = offenseTypesByLevel[lvl] || offenseTypesByLevel[String(lvl)] || [];
+        html += `
+            <div class="av-ref-level">
+                <div class="av-ref-level-badge">Level ${lvl}</div>
+                <div class="av-ref-level-name">${levelNames[lvl]}</div>
+                <ul class="av-ref-offense-list">
+                    ${offenses.length
+                        ? offenses.map(o => `<li>${escHtml(o.title || o)}</li>`).join('')
+                        : '<li style="color:rgba(245,197,99,0.4);font-style:italic;">No offenses defined</li>'
+                    }
+                </ul>
+            </div>
+            ${i < 3 ? '<div class="av-ref-divider"></div>' : ''}`;
+    });
+    panel.innerHTML = html;
+}
+
 async function showAddViolation() {
     document.getElementById('addViolationModal').classList.remove('hidden');
     const today = new Date().toISOString().split('T')[0];
     const di = document.getElementById('avOffenseDate');
     if (di && !di.value) di.value = today;
     initStudentIdLookup();
+
     await Promise.all([loadOffenseTypes(), loadTeachers()]);
+
     // Pre-fill reporter with the logged-in teacher
-    const myName = getTeacherName();
-    const myId   = getTeacherId();
     const repInput = document.getElementById('avReporterInput');
     const repId    = document.getElementById('avReporterTeacherId');
-    if (repInput && !repInput.value) repInput.value = myName;
-    if (repId   && !repId.value)    repId.value    = myId;
+    if (repInput && !repInput.value) repInput.value = getTeacherName();
+    if (repId   && !repId.value)    repId.value    = getTeacherId();
     renderReporterDropdown('');
+
+    // Build the dynamic reference panel from live DB data
+    buildReferencePanel();
 }
 
 function closeAddViolationModal() {
@@ -931,7 +1025,6 @@ function closeAddViolationModal() {
     document.getElementById('av-form-error').textContent = '';
 }
 
-// ── Submit violation ──────────────────────────────────────────
 async function submitViolation(e) {
     e.preventDefault();
     const errEl     = document.getElementById('av-form-error');
@@ -978,7 +1071,7 @@ async function submitViolation(e) {
             if (ss) ss.innerHTML = `<strong>${escHtml(data.student_name)}</strong><br>Offense #${data.occurrence} · Level ${data.level}<br>Sanction: <strong>${escHtml(data.sanction)}</strong> · Demerits: <strong>${data.demerits}</strong>`;
             document.getElementById('successModal').classList.remove('hidden');
             setTimeout(() => document.getElementById('successModal').classList.add('hidden'), 6000);
-            loadRecentReports(); // refresh recent reports table
+            loadRecentReports();
         } else {
             errEl.textContent = data.message || 'Failed to save.';
         }
@@ -991,15 +1084,14 @@ async function submitViolation(e) {
 }
 
 // ════════════════════════════════════════════════════════════
-//  RECENT REPORTS  (dashboard table — only this teacher's)
+//  RECENT REPORTS
 // ════════════════════════════════════════════════════════════
 async function loadRecentReports() {
     const tbody = document.getElementById('tbody-recent-reports');
     if (!tbody) return;
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>`;
     try {
-        const tid = getTeacherId();
-        // Filter by this teacher's reports + limit to 4 most recent
+        const tid  = getTeacherId();
         const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4`);
         const data = await res.json();
         if (!data.success || !data.violations.length) {
@@ -1007,10 +1099,7 @@ async function loadRecentReports() {
             return;
         }
         tbody.innerHTML = data.violations.map(v => {
-            // Build grade & section from whatever fields the API returns
-            const gs = v.grade_section
-                || [v.grade_level, v.section_name].filter(Boolean).join(' - ')
-                || '—';
+            const gs = v.grade_section || [v.grade_level, v.section_name].filter(Boolean).join(' - ') || '—';
             return `<tr>
                 <td>${escHtml(v.student_name)}</td>
                 <td>${escHtml(gs)}</td>
@@ -1036,9 +1125,7 @@ async function loadOffenseHistory() {
     tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>`;
     try {
         const tid  = getTeacherId();
-        // Always filter by this teacher — teachers should only see their own reports
-        const url  = `${API_BASE}/get_violations.php?teacher_id=${tid}`;
-        const res  = await apiFetch(url);
+        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}`);
         const data = await res.json();
         if (!data.success || !data.violations.length) {
             tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No offense reports found.</td></tr>`;
@@ -1056,8 +1143,7 @@ async function loadOffenseHistory() {
 function populateDateDropdown(violations) {
     const sel = document.getElementById('historyDateSelect');
     const dates = [...new Set(violations.map(v => v.reported_at ? v.reported_at.split(' ')[0] : null).filter(Boolean))].sort().reverse();
-    sel.innerHTML = '<option value="">All Dates</option>' +
-        dates.map(d => `<option value="${d}">${d}</option>`).join('');
+    sel.innerHTML = '<option value="">All Dates</option>' + dates.map(d => `<option value="${d}">${d}</option>`).join('');
 }
 
 function renderHistoryTable(rows) {
@@ -1080,8 +1166,8 @@ function renderHistoryTable(rows) {
 }
 
 function filterHistoryTable(q) {
-    const term = q.trim().toLowerCase();
-    const dateVal = document.getElementById('historyDateSelect').value;
+    const term     = q.trim().toLowerCase();
+    const dateVal  = document.getElementById('historyDateSelect').value;
     const filtered = historyData.filter(v => {
         const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
         const matchDate   = !dateVal || (v.reported_at||'').startsWith(dateVal);
@@ -1091,7 +1177,7 @@ function filterHistoryTable(q) {
 }
 
 function filterHistoryByDate(dateVal) {
-    const term = (document.getElementById('historySearch').value||'').trim().toLowerCase();
+    const term     = (document.getElementById('historySearch').value||'').trim().toLowerCase();
     const filtered = historyData.filter(v => {
         const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
         const matchDate   = !dateVal || (v.reported_at||'').startsWith(dateVal);
@@ -1106,6 +1192,7 @@ function filterHistoryByDate(dateVal) {
 document.addEventListener('DOMContentLoaded', function () {
     applySessionToUI();
     showDashboard();
+    // Pre-load data in background so pages open instantly
     loadTeachers();
     loadOffenseTypes();
 });
