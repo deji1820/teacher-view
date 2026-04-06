@@ -669,13 +669,14 @@ function renderDMOffenseLists() {
                 ? `${occLabel} Offense onwards`
                 : `${occLabel} Offense`;
             const extra    = p.extra || p.notes || '';
-           const action      = (p.action || p.action_type || '').trim();
-const cleanAction = action.replace(/^\d+(st|nd|rd|th)\s+offense\s*[-–—]\s*/i, '').trim();
-const cleanExtra  = extra.replace(/^\d+(st|nd|rd|th)\s+offense\s*(onwards)?\s*[-–—]\s*/i, '').trim();
+           const action = (p.action || p.action_type || '').trim();
 
+// Only show extra if it's a clean short note, not a pre-built sentence
+// (notes field currently stores full sentences like "1st Offense - Reminder + 1 demerit")
+const isCleanExtra = extra && extra.length < 40 && !/offense/i.test(extra);
 const parts = [
-    cleanAction,
-    cleanExtra,
+    action,
+    isCleanExtra ? extra : '',
     `${p.demerit} demerit${p.demerit !== 1 ? 's' : ''}`,
 ].filter(Boolean);
 return `<li>${label} — ${parts.join(' + ')}</li>`;
