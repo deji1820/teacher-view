@@ -673,7 +673,7 @@ function renderDMOffenseLists() {
 
 // Only show extra if it's a clean short note, not a pre-built sentence
 // (notes field currently stores full sentences like "1st Offense - Reminder + 1 demerit")
-const isCleanExtra = extra && extra.length < 40 && !/offense/i.test(extra);
+const isCleanExtra = extra && extra.length < 40 && !/offense/i.test(extra) && extra.toLowerCase() !== action.toLowerCase();
 const parts = [
     action,
     isCleanExtra ? extra : '',
