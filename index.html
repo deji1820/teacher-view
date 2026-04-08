@@ -593,12 +593,27 @@ function updateActiveNav(index) {
     document.querySelectorAll('.nav-item').forEach((item, i) => item.classList.toggle('active', i === index));
 }
 
+async function loadAnnouncement() {
+    try {
+        const res  = await apiFetch(`${API_BASE}/save_announcement.php`);
+        const data = await res.json();
+        const msg  = data.text || '';
+        if (msg) {
+            const el = document.querySelector('.announcement-text span:last-child');
+            if (el) el.textContent = msg;
+        }
+    } catch(err) {
+        console.error('loadAnnouncement failed:', err);
+    }
+}
+
 function showDashboard() {
     hideAllPages();
     document.getElementById('dashboardHome').classList.remove('hidden');
     updateTopBar('🏠','Dashboard','Welcome Back, ' + getTeacherName() + '!');
     updateActiveNav(0);
     loadRecentReports();
+    loadAnnouncement();
 }
 
 function showManageOffense() {
