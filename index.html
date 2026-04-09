@@ -1063,6 +1063,65 @@ document.addEventListener('DOMContentLoaded', function () {
     loadTeachers();
     loadOffenseTypes();
 });
+
+async function submitFirstLoginPassword(role) {
+    const newPass     = document.getElementById('tflNewPassword').value.trim();
+    const confirmPass = document.getElementById('tflConfirmPassword').value.trim();
+    const errEl       = document.getElementById('tflError');
+    errEl.textContent = '';
+
+    if (newPass.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+    if (newPass !== confirmPass) { errEl.textContent = 'Passwords do not match.'; return; }
+
+    try {
+        const res  = await apiFetch(`${API_BASE}/change_password.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ role: 'teacher', identifier: getTeacherId(), new_password: newPass }),
+        });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('teacherFirstLoginModal').classList.add('hidden');
+        } else {
+            errEl.textContent = data.message || 'Failed to update password.';
+        }
+    } catch (err) {
+        errEl.textContent = 'Network error. Please try again.';
+    }
+}
 </script>
+<!-- ── First Login Modal ── -->
+<div id="teacherFirstLoginModal" style="position:fixed;top:0;left:0;width:100%;height:100%;
+     background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;
+     z-index:99998;backdrop-filter:blur(5px);" class="hidden">
+    <div style="background:#fff;border-radius:16px;padding:50px 60px;max-width:440px;width:90%;
+                box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;">
+        <div style="font-size:52px;margin-bottom:16px;">🔐</div>
+        <div style="font-size:22px;font-weight:700;color:#2d2550;margin-bottom:8px;">Welcome!</div>
+        <div style="font-size:14px;color:#666;margin-bottom:28px;">
+            For your security, please change your password before continuing.
+        </div>
+        <div style="text-align:left;display:flex;flex-direction:column;gap:16px;margin-bottom:20px;">
+            <div>
+                <label style="font-size:13px;font-weight:600;color:#2d2550;display:block;margin-bottom:6px;">New Password</label>
+                <input type="password" id="tflNewPassword" placeholder="At least 8 characters"
+                    style="width:100%;padding:12px 16px;border:2px solid #ddd;border-radius:8px;
+                           font-family:'Outfit',sans-serif;font-size:14px;color:#2d2550;">
+            </div>
+            <div>
+                <label style="font-size:13px;font-weight:600;color:#2d2550;display:block;margin-bottom:6px;">Confirm Password</label>
+                <input type="password" id="tflConfirmPassword" placeholder="Re-enter new password"
+                    style="width:100%;padding:12px 16px;border:2px solid #ddd;border-radius:8px;
+                           font-family:'Outfit',sans-serif;font-size:14px;color:#2d2550;">
+            </div>
+        </div>
+        <div id="tflError" style="color:#dc3545;font-size:13px;min-height:18px;margin-bottom:12px;"></div>
+        <button onclick="submitFirstLoginPassword('teacher')"
+            style="width:100%;background:#2d2550;color:#d4a650;border:none;border-radius:8px;
+                   padding:14px;font-size:16px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;">
+            Set New Password
+        </button>
+    </div>
+</div>
 </body>
 </html>
