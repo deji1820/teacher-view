@@ -999,7 +999,6 @@ async function loadSectionRoster(sectionId) {
             return;
         }
         if (data.students.length) console.log('Student object keys:', Object.keys(data.students[0]), data.students[0]);
-tbody.innerHTML = data.students.map(s => `
         tbody.innerHTML = data.students.map(s => `
             <tr>
                 <td>${escHtml(s.first_name  || '—')}</td>
