@@ -998,13 +998,15 @@ async function loadSectionRoster(sectionId) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No students in this section.</td></tr>`;
             return;
         }
+        if (data.students.length) console.log('Student object keys:', Object.keys(data.students[0]), data.students[0]);
+tbody.innerHTML = data.students.map(s => `
         tbody.innerHTML = data.students.map(s => `
             <tr>
                 <td>${escHtml(s.first_name  || '—')}</td>
                 <td>${escHtml(s.middle_name || '—')}</td>
                 <td>${escHtml(s.last_name   || '—')}</td>
                 <td>${escHtml(s.contact_email || '—')}</td>
-                <td>${escHtml(s.guardian_name  || '—')}</td>
+                <td>${escHtml(s.guardian_name || s.parent_name || s.guardian_full_name || s.parent_full_name || s.emergency_contact_name || '—')}</td>
                 <td>${escHtml(s.guardian_phone || s.contact_phone || '—')}</td>
             </tr>
         `).join('');
