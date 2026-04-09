@@ -1062,6 +1062,12 @@ document.addEventListener('DOMContentLoaded', function () {
     showDashboard();
     loadTeachers();
     loadOffenseTypes();
+
+    // Check if this is first login (passed via sessionStorage from login page)
+if (sessionStorage.getItem('is_first_login') === '1') {
+    sessionStorage.removeItem('is_first_login');
+    document.getElementById('teacherFirstLoginModal').classList.remove('hidden');
+}
 });
 
 async function submitFirstLoginPassword(role) {
