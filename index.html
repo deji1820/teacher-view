@@ -300,6 +300,16 @@
     </div>
 </div>
 
+<!-- ══ COMING SOON MODAL ══ -->
+<div id="comingSoonModal" class="modal-overlay hidden" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;z-index:4000;backdrop-filter:blur(5px);">
+    <div style="background:#fff;border-radius:16px;padding:50px 60px;text-align:center;max-width:380px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+        <div style="font-size:52px;margin-bottom:16px;">🚧</div>
+        <div style="font-size:22px;font-weight:700;color:#2d2550;margin-bottom:8px;" id="comingSoonTitle">Coming Soon</div>
+        <div style="font-size:14px;color:#666;margin-bottom:30px;">This feature is not yet available. Please check back later.</div>
+        <button onclick="closeComingSoonModal()" style="background:#2d2550;color:#d4a650;border:none;border-radius:8px;padding:12px 40px;font-size:15px;font-weight:600;font-family:'Outfit',sans-serif;cursor:pointer;">Got it</button>
+    </div>
+</div>
+
 <div class="dashboard">
     <aside class="sidebar">
         <div class="sidebar-header">
@@ -346,10 +356,16 @@
                         <div class="dropdown-user-email" id="dropdownEmail">—</div>
                     </div>
                     <div class="dropdown-menu-items">
-                        <a href="#" class="dropdown-menu-item logout" onclick="logout(event)">
-                            <span class="dropdown-icon">🚪</span><span>Logout</span>
-                        </a>
-                    </div>
+    <a href="#" class="dropdown-menu-item" onclick="showComingSoon('Edit Username'); return false;">
+        <span class="dropdown-icon">👤</span><span>Edit Username</span>
+    </a>
+    <a href="#" class="dropdown-menu-item" onclick="showComingSoon('Change Password'); return false;">
+        <span class="dropdown-icon">🔒</span><span>Change Password</span>
+    </a>
+    <a href="#" class="dropdown-menu-item logout" onclick="logout(event)">
+        <span class="dropdown-icon">🚪</span><span>Logout</span>
+    </a>
+</div>
                 </div>
             </div>
         </div>
@@ -1015,6 +1031,15 @@ async function loadSectionRoster(sectionId) {
     }
 }
 
+function showComingSoon(featureName) {
+    document.getElementById('comingSoonTitle').textContent = featureName || 'Coming Soon';
+    document.getElementById('comingSoonModal').classList.remove('hidden');
+    document.getElementById('accountDropdown').classList.remove('show');
+}
+function closeComingSoonModal() {
+    document.getElementById('comingSoonModal').classList.add('hidden');
+}
+    
 function toggleAccountDropdown(e) {
     e.stopPropagation();
     document.getElementById('accountDropdown').classList.toggle('show');
