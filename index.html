@@ -487,8 +487,7 @@
         </ul>
     </div>
 </div>
-</div>
-
+        </div>
 
         <!-- ── OFFENSE HISTORY ── -->
         <div id="offenseHistoryPage" class="offense-history-page hidden">
@@ -1047,8 +1046,8 @@ async function loadTeacherSections() {
         const tid  = getTeacherId();
         const res  = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
         const data = await res.json();
-        const mySections = (data.sections || []).filter(sec => String(sec.adviser_id) === String(tid));
-        if (!data.success || !mySections.length) {
+        const mySections = data.sections || [];
+if (!data.success || !mySections.length) {
             grid.innerHTML = `<div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">No sections assigned.</div>`;
             return;
         }
