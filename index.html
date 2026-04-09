@@ -213,9 +213,10 @@
 (function initTeacherSession() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('id')) {
-        sessionStorage.setItem('teacher_id',    params.get('id'));
-        sessionStorage.setItem('teacher_name',  decodeURIComponent(params.get('name')  || ''));
-        sessionStorage.setItem('teacher_email', decodeURIComponent(params.get('email') || ''));
+        sessionStorage.setItem('teacher_id',       params.get('id'));
+        sessionStorage.setItem('teacher_name',     decodeURIComponent(params.get('name')  || ''));
+        sessionStorage.setItem('teacher_email',    decodeURIComponent(params.get('email') || ''));
+        sessionStorage.setItem('is_first_login',   params.get('first_login') === '1' ? '1' : '');
         window.history.replaceState({}, document.title, window.location.pathname);
     }
     if (!sessionStorage.getItem('teacher_id')) {
