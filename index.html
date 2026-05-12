@@ -154,16 +154,22 @@
         .report-button { padding: 14px 30px; background: var(--dark-navy); border: none; border-radius: 8px; color: var(--gold); font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.3s ease; }
         .report-button:hover { background: var(--navy); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(45,37,80,0.3); }
 
-        .reports-section { background: var(--light-gray); border-radius: 12px; padding: 30px; }
-        .reports-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .reports-title { font-size: 24px; font-weight: 600; color: var(--dark-navy); }
-        .history-link { color: var(--dark-navy); text-decoration: underline; font-size: 14px; cursor: pointer; }
-        .reports-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 8px; overflow: hidden; }
-        .reports-table th { padding: 15px; text-align: center; font-size: 14px; font-weight: 600; color: var(--dark-navy); border: 2px solid var(--dark-navy); }
-        .reports-table td { padding: 20px 15px; font-size: 13px; color: var(--dark-navy); border: 2px solid var(--dark-navy); text-align: center; }
-        .reports-table tbody tr:hover { background: #f9f9f9; }
-        .status-validated { color: #28a745; font-weight: 600; }
-        .status-pending { color: #ffc107; font-weight: 600; }
+        .reports-section { background: var(--white); border-radius: 16px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.reports-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.reports-title { font-size: 20px; font-weight: 700; color: var(--dark-navy); }
+.history-link { color: var(--navy); text-decoration: none; font-size: 13px; font-weight: 600; background: var(--light-gray); padding: 7px 16px; border-radius: 20px; transition: background 0.2s; }
+.history-link:hover { background: #d8d9db; }
+.reports-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: 10px; overflow: hidden; }
+.reports-table thead { background: var(--dark-navy); }
+.reports-table th { padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; border: none; }
+.reports-table td { padding: 14px 16px; font-size: 13px; color: var(--dark-navy); border-bottom: 1px solid #f0f0f0; text-align: left; }
+.reports-table tbody tr:last-child td { border-bottom: none; }
+.reports-table tbody tr:hover { background: #f5f3ff; }
+.level-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; }
+.level-1 { background: #e8f5e9; color: #2e7d32; }
+.level-2 { background: #fff8e1; color: #f57f17; }
+.level-3 { background: #fff3e0; color: #e65100; }
+.level-4 { background: #fce4ec; color: #c62828; }
 
         .back-button { display: inline-flex; align-items: center; gap: 15px; background: var(--dark-navy); color: var(--white); border: none; border-radius: 50px; padding: 12px 30px 12px 12px; font-size: 20px; font-weight: 600; cursor: pointer; margin-bottom: 40px; transition: all 0.3s ease; }
         .back-button:hover { background: var(--navy); transform: translateX(-5px); }
@@ -482,19 +488,21 @@
                 </button>
             </div>
             <div class="reports-section">
-                <div class="reports-header">
-                    <h2 class="reports-title">Recent Reports</h2>
-                    <a href="#" class="history-link" onclick="viewOffenseHistory(); return false;">History</a>
-                </div>
-                <table class="reports-table">
-                    <thead>
-                        <tr><th>Name</th><th>Grade &amp; Section</th><th>Level</th><th>Offense</th><th>Date Reported</th></tr>
-                    </thead>
-                    <tbody id="tbody-recent-reports">
-                        <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
-                    </tbody>
-                </table>
-            </div>
+    <div class="reports-header">
+        <h2 class="reports-title">📋 Recent Reports</h2>
+        <a href="#" class="history-link" onclick="viewOffenseHistory(); return false;">View History →</a>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid #f0f0f0;">
+        <table class="reports-table">
+            <thead>
+                <tr><th>Name</th><th>Grade &amp; Section</th><th>Level</th><th>Offense</th><th>Date Reported</th></tr>
+            </thead>
+            <tbody id="tbody-recent-reports">
+                <tr><td colspan="5" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
         </div>
         <!-- ══ END: DASHBOARD HOME ══ -->
 
@@ -951,12 +959,13 @@ const res = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&dat
         }
         tbody.innerHTML = data.violations.map(v => {
             const gs = v.grade_section || (v.grade_level && v.section_name ? `${v.grade_level} - ${v.section_name}` : v.grade_level || v.section_name || '—');
-            return `<tr>
-    <td>${escHtml(v.student_name)}</td>
+            const lvl = v.offense_level || 0;
+return `<tr>
+    <td style="font-weight:600;">${escHtml(v.student_name)}</td>
     <td>${escHtml(gs)}</td>
-    <td>${v.offense_level || '—'}</td>
+    <td><span class="level-badge level-${lvl}">Level ${lvl}</span></td>
     <td>${escHtml(v.offense || '—')}</td>
-    <td>${escHtml(v.date_display || '—')}</td>
+    <td style="color:#888;">${escHtml(v.date_display || '—')}</td>
 </tr>`;
         }).join('');
     } catch(err) {
