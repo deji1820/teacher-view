@@ -438,9 +438,9 @@
                     <div class="stat-value" id="statSections">—</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-title">Excused Today</div>
-                    <div class="stat-value">2</div>
-                </div>
+    <div class="stat-title">Reported Today</div>
+    <div class="stat-value" id="statReportedToday">—</div>
+</div>
             </div>
             <div class="announcement-banner">
                 <div class="announcement-icon">📢</div>
@@ -673,6 +673,7 @@ function showDashboard() {
     updateTopBar('🏠','Dashboard','Welcome Back, ' + getTeacherName() + '!');
     updateActiveNav(0);
     loadRecentReports();
+    loadDashboardStats();
     loadAnnouncement();
 }
 
@@ -1036,6 +1037,27 @@ async function viewMySections() {
     updateTopBar('📁', 'My Sections', '');
     updateActiveNav(1);
     await loadTeacherSections();
+}
+
+async function loadDashboardStats() {
+    const tid = getTeacherId();
+
+    // My Sections count
+    try {
+        const res  = await apiFetch(`${API_BASE}/get_sections.php?adviser_id=${tid}`);
+        const data = await res.json();
+        const el   = document.getElementById('statSections');
+        if (el) el.textContent = (data.success && data.sections) ? data.sections.length : '0';
+    } catch(err) { console.error('statSections:', err); }
+
+    // Reported Today count
+    try {
+        const today = new Date().toISOString().split('T')[0];
+        const res   = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&date=${today}`);
+        const data  = await res.json();
+        const el    = document.getElementById('statReportedToday');
+        if (el) el.textContent = (data.success && data.violations) ? data.violations.length : '0';
+    } catch(err) { console.error('statReportedToday:', err); }
 }
 
 async function loadTeacherSections() {
