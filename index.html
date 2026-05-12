@@ -947,7 +947,7 @@ const res = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&dat
             return;
         }
         tbody.innerHTML = data.violations.map(v => {
-            const gs = v.grade_section || [v.grade_level, v.section_name].filter(Boolean).join(' - ') || '—';
+            const gs = v.grade_section || (v.grade_level && v.section_name ? `${v.grade_level} - ${v.section_name}` : v.grade_level || v.section_name || '—');
             return `<tr>
     <td>${escHtml(v.student_name)}</td>
     <td>${escHtml(gs)}</td>
