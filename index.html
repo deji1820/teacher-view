@@ -939,7 +939,8 @@ async function loadRecentReports() {
     tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>`;
     try {
         const tid  = getTeacherId();
-        const res  = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&limit=4`);
+        const today = new Date().toISOString().split('T')[0];
+const res = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&date=${today}`);
         const data = await res.json();
         if (!data.success || !data.violations.length) {
             tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No recent reports.</td></tr>`;
@@ -952,7 +953,7 @@ async function loadRecentReports() {
                 <td>${escHtml(gs)}</td>
                 <td>${v.offense_level || '—'}</td>
                 <td>${escHtml(v.offense || '—')}</td>
-                <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
+                <td>${escHtml(v.date_display || '—')}</td>
                 <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
             </tr>`;
         }).join('');
