@@ -461,7 +461,7 @@
                 </div>
                 <table class="reports-table">
                     <thead>
-                        <tr><th>Name</th><th>Grade &amp; Section</th><th>Level</th><th>Offense</th><th>Date Reported</th><th>Status</th></tr>
+                        <tr><th>Name</th><th>Grade &amp; Section</th><th>Level</th><th>Offense</th><th>Date Reported</th></tr>
                     </thead>
                     <tbody id="tbody-recent-reports">
                         <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading…</td></tr>
@@ -949,13 +949,12 @@ const res = await apiFetch(`${API_BASE}/get_violations.php?teacher_id=${tid}&dat
         tbody.innerHTML = data.violations.map(v => {
             const gs = v.grade_section || [v.grade_level, v.section_name].filter(Boolean).join(' - ') || '—';
             return `<tr>
-                <td>${escHtml(v.student_name)}</td>
-                <td>${escHtml(gs)}</td>
-                <td>${v.offense_level || '—'}</td>
-                <td>${escHtml(v.offense || '—')}</td>
-                <td>${escHtml(v.date_display || '—')}</td>
-                <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
-            </tr>`;
+    <td>${escHtml(v.student_name)}</td>
+    <td>${escHtml(gs)}</td>
+    <td>${v.offense_level || '—'}</td>
+    <td>${escHtml(v.offense || '—')}</td>
+    <td>${escHtml(v.date_display || '—')}</td>
+</tr>`;
         }).join('');
     } catch(err) {
         console.error('loadRecentReports:', err);
