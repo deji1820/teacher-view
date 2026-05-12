@@ -132,6 +132,19 @@
         .stat-title { font-size: 20px; font-weight: 600; color: var(--gold); margin-bottom: 15px; }
         .stat-value { font-size: 64px; font-weight: 700; color: var(--gold); }
 
+        .nav-parent { cursor: pointer; user-select: none; }
+.nav-dropdown-arrow { margin-left: auto; font-size: 11px; color: var(--gold); transition: transform 0.25s ease; }
+.nav-dropdown-arrow.open { transform: rotate(180deg); }
+.nav-dropdown { background: rgba(0,0,0,0.2); overflow: hidden; }
+.nav-sub-item {
+    display: block; padding: 10px 20px 10px 58px;
+    color: rgba(245,197,99,0.75); font-size: 13px; font-weight: 400;
+    text-decoration: none; transition: all 0.2s ease;
+    border-left: 4px solid transparent;
+}
+.nav-sub-item:hover { color: var(--light-gold); background: rgba(212,166,80,0.08); border-left-color: var(--gold); }
+.nav-sub-item.active { color: var(--light-gold); font-weight: 600; border-left-color: var(--gold); }
+
         .announcement-banner { background: linear-gradient(135deg, #f5c563 0%, #d4a650 100%); border-radius: 12px; padding: 20px 30px; margin-bottom: 40px; display: flex; align-items: center; gap: 15px; box-shadow: 0 4px 15px rgba(212,166,80,0.3); }
         .announcement-icon { font-size: 28px; }
         .announcement-text { flex: 1; font-size: 16px; color: var(--dark-navy); }
@@ -389,13 +402,20 @@
             </div>
         </div>
         <nav class="nav-menu">
-            <a href="#" class="nav-item active" onclick="showDashboard(); return false;">
-                <span class="nav-icon">🏠</span><span>Dashboard</span>
-            </a>
-            <a href="#" class="nav-item" onclick="showManageOffense(); return false;">
-                <span class="nav-icon">📁</span><span>Manage Offense</span>
-            </a>
-        </nav>
+    <a href="#" class="nav-item active" onclick="showDashboard(); return false;">
+        <span class="nav-icon">🏠</span><span>Dashboard</span>
+    </a>
+
+    <div class="nav-item nav-parent" onclick="toggleNavDropdown('manageOffenseDropdown', this)">
+        <span class="nav-icon">📁</span><span>Manage Offense</span>
+        <span class="nav-dropdown-arrow" id="manageOffenseArrow">▼</span>
+    </div>
+    <div class="nav-dropdown hidden" id="manageOffenseDropdown">
+        <a href="#" class="nav-sub-item" onclick="navTo(event, viewDisciplinaryMeasures)">The HIMC Disciplinary Measures</a>
+        <a href="#" class="nav-sub-item" onclick="navTo(event, viewOffenseHistory)">Offense Report History</a>
+        <a href="#" class="nav-sub-item" onclick="navTo(event, viewMySections)">My Sections</a>
+    </div>
+</nav>
     </aside>
 
     <main class="main-content">
@@ -478,29 +498,11 @@
         </div>
         <!-- ══ END: DASHBOARD HOME ══ -->
 
-        <!-- ══ PAGE: MANAGE OFFENSE ══ -->
-        <div id="manageOffensePage" class="manage-offense-page hidden">
-            <div class="manage-offense-content">
-                <div class="manage-offense-grid">
-                    <div class="manage-card" onclick="viewDisciplinaryMeasures()">
-                        <h3 class="manage-card-title">The HIMC Disciplinary<br>Measures</h3>
-                    </div>
-                    <div class="manage-card" onclick="viewOffenseHistory()">
-                        <h3 class="manage-card-title">Offense Report History</h3>
-                    </div>
-                    <div class="manage-card" onclick="viewMySections()">
-                        <h3 class="manage-card-title">My Sections</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ══ END: MANAGE OFFENSE ══ -->
+       
 
         <!-- ══ PAGE: DISCIPLINARY MEASURES ══ -->
         <div id="disciplinaryMeasuresPage" class="disciplinary-measures-page hidden">
-            <button class="back-button" onclick="backToManageOffense()">
-                <div class="back-icon">←</div><span>The HIMC Disciplinary Measures</span>
-            </button>
+            
             <div class="disciplinary-content">
                 <div class="disciplinary-header">
                     <h2 class="disciplinary-title">The HIMC Disciplinary Measures</h2>
@@ -576,9 +578,7 @@
 
         <!-- ══ PAGE: MY SECTIONS ══ -->
         <div id="mySectionsPage" class="my-sections-page hidden">
-            <button class="back-button" onclick="backToManageOffense()">
-                <div class="back-icon">←</div><span>My Sections</span>
-            </button>
+            
             <div class="sections-grid" id="sectionsGrid">
                 <div style="color:#aaa;font-size:15px;padding:20px;grid-column:1/-1;">Loading sections…</div>
             </div>
@@ -645,9 +645,10 @@ function applySessionToUI() {
 }
 
 function hideAllPages() {
-    ['dashboardHome','manageOffensePage','disciplinaryMeasuresPage',
-     'offenseHistoryPage','mySectionsPage','sectionDetailPage'
-    ].forEach(id => { const el=document.getElementById(id); if(el) el.classList.add('hidden'); });
+    ['dashboardHome','disciplinaryMeasuresPage',
+ 'offenseHistoryPage','mySectionsPage','sectionDetailPage']
+        
+.forEach(id => { const el=document.getElementById(id); if(el) el.classList.add('hidden'); });
 }
 
 function updateTopBar(icon, title, subtitle) {
@@ -684,14 +685,9 @@ function showDashboard() {
     loadAnnouncement();
 }
 
-function showManageOffense() {
-    hideAllPages();
-    document.getElementById('manageOffensePage').classList.remove('hidden');
-    updateTopBar('📁','Manage Offense','');
-    updateActiveNav(1);
-}
 
-function backToManageOffense() { showManageOffense(); }
+
+
 
 let offenseTypesByLevel = {}, offenseTypesLoaded = false, penaltiesByLevel = {};
 
@@ -1039,6 +1035,22 @@ function filterHistoryTable(q) {
     }));
 }
 
+function toggleNavDropdown(dropdownId, parentEl) {
+    const dropdown = document.getElementById(dropdownId);
+    const arrow = parentEl.querySelector('.nav-dropdown-arrow');
+    const isOpen = !dropdown.classList.contains('hidden');
+    dropdown.classList.toggle('hidden', isOpen);
+    arrow.classList.toggle('open', !isOpen);
+    parentEl.classList.toggle('active', !isOpen);
+}
+
+function navTo(e, fn) {
+    e.preventDefault();
+    document.querySelectorAll('.nav-sub-item').forEach(el => el.classList.remove('active'));
+    e.target.classList.add('active');
+    fn();
+}
+    
 function filterHistoryByDate(dateVal) {
     const term = (document.getElementById('historySearch').value || '').trim().toLowerCase();
     renderHistoryTable(historyData.filter(v => {
