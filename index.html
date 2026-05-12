@@ -553,9 +553,7 @@
     <div class="history-container">
         <div class="history-header">
             <input type="text" class="search-input" placeholder="🔍  Search by name or offense…" id="historySearch" oninput="filterHistoryTable(this.value)">
-            <select class="date-select" id="historyDateSelect" onchange="filterHistoryByDate(this.value)">
-                <option value="">All Dates</option>
-            </select>
+            <input type="date" class="date-select" id="historyDateSelect" onchange="filterHistoryByDate(this.value)">
         </div>
         <div class="history-table-wrapper">
             <table class="history-table">
@@ -981,8 +979,7 @@ async function loadOffenseHistory() {
             return;
         }
         historyData = data.violations;
-        populateDateDropdown(historyData);
-        renderHistoryTable(historyData);
+renderHistoryTable(historyData);
     } catch(err) {
         console.error('loadOffenseHistory:', err);
         tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#dc3545;padding:30px;">Failed to load.</td></tr>`;
