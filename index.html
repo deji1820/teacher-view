@@ -1005,7 +1005,7 @@ function renderHistoryTable(rows) {
             <td>${escHtml(v.student_name)}</td>
             <td>${escHtml(v.offense || '—')}</td>
             <td>${v.offense_level || '—'}</td>
-            <td>${escHtml(v.reported_at ? v.reported_at.split(' ')[0] : '—')}</td>
+            <td>${escHtml(v.date_display || '—')}</td>
             <td>${escHtml(v.reporter_name || '—')}</td>
             <td>${escHtml(v.remarks || 'N/A')}</td>
             <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
