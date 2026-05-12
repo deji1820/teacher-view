@@ -202,17 +202,22 @@
         .section-name { font-size: 28px; font-weight: 600; color: var(--gold); }
 
         .section-detail-page { padding: 40px; flex: 1; overflow-y: auto; }
-        .section-detail-container { background: var(--light-gray); border-radius: 12px; padding: 40px; }
-        .section-info-bar { display: flex; justify-content: space-between; align-items: center; background: var(--white); padding: 20px 30px; border-radius: 8px; margin-bottom: 30px; }
-        .section-info-left { display: flex; gap: 40px; }
-        .section-info-item { font-size: 16px; color: var(--dark-navy); }
-        .section-info-item strong { font-weight: 600; }
-        .section-quarter { font-size: 16px; font-weight: 600; color: var(--dark-navy); }
-        .roster-table-wrapper { background: var(--white); border-radius: 8px; overflow-x: auto; padding: 20px; }
-        .roster-table { width: 100%; border-collapse: collapse; }
-        .roster-table th { padding: 15px; text-align: center; font-size: 14px; font-weight: 600; color: var(--dark-navy); border: 2px solid var(--dark-navy); }
-        .roster-table td { padding: 20px 15px; font-size: 13px; color: var(--dark-navy); border: 2px solid var(--dark-navy); text-align: center; }
-        .roster-table tbody tr:hover { background: #f9f9f9; }
+.section-detail-container { background: var(--white); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.section-info-bar { display: flex; justify-content: space-between; align-items: center; background: var(--dark-navy); padding: 24px 30px; }
+.section-info-left { display: flex; gap: 40px; }
+.section-info-item { font-size: 15px; color: rgba(255,255,255,0.8); }
+.section-info-item strong { font-weight: 700; color: var(--gold); margin-right: 6px; }
+.section-quarter { font-size: 15px; font-weight: 700; color: var(--gold); background: rgba(212,166,80,0.15); padding: 6px 18px; border-radius: 20px; border: 1px solid rgba(212,166,80,0.3); }
+.roster-table-wrapper { padding: 24px; }
+.roster-table { width: 100%; border-collapse: collapse; }
+.roster-table thead { background: var(--dark-navy); }
+.roster-table th { padding: 13px 16px; text-align: left; font-size: 11px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.06em; border: none; }
+.roster-table th:first-child { border-radius: 0; }
+.roster-table th:last-child { border-radius: 0; }
+.roster-table td { padding: 14px 16px; font-size: 13px; color: var(--dark-navy); border-bottom: 1px solid #f0f0f0; }
+.roster-table tbody tr:last-child td { border-bottom: none; }
+.roster-table tbody tr:hover { background: #f5f3ff; }
+.roster-count { font-size: 13px; color: rgba(255,255,255,0.6); }
 
         .av-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); display: flex; align-items: center; justify-content: center; z-index: 3000; backdrop-filter: blur(4px); }
         .av-modal { background: var(--white); border-radius: 14px; width: 92%; max-width: 900px; max-height: 90vh; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 24px 60px rgba(0,0,0,0.35); animation: modalFadeIn 0.3s ease-out; }
@@ -581,31 +586,38 @@
         <!-- ══ END: MY SECTIONS ══ -->
 
         <!-- ══ PAGE: SECTION DETAIL ══ -->
-        <div id="sectionDetailPage" class="section-detail-page hidden">
-            <button class="back-button" onclick="viewMySections()">
-                <div class="back-icon">←</div><span id="sectionDetailTitle">Section</span>
-            </button>
-            <div class="section-detail-container">
-                <div class="section-info-bar">
-                    <div class="section-info-left">
-                        <div class="section-info-item"><strong>Grade &amp; Section:</strong> <span id="sectionInfoGrade"></span></div>
-                        <div class="section-info-item"><strong>Adviser:</strong> <span id="sectionInfoAdviser"></span></div>
-                    </div>
-                    <div class="section-quarter">Quarter 1</div>
-                </div>
-                <div class="roster-table-wrapper">
-                    <table class="roster-table">
-                        <thead>
-                            <tr><th>First Name</th><th>Middle Name</th><th>Last Name</th><th>Email</th><th>Guardian's Name</th><th>Guardian's Number</th></tr>
-                        </thead>
-                        <tbody id="rosterTableBody">
-                            <tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading students…</td></tr>
-                        </tbody>
-                    </table>
-                </div>
+<div id="sectionDetailPage" class="section-detail-page hidden">
+    <div class="section-detail-container">
+        <div class="section-info-bar">
+            <div class="section-info-left">
+                <div class="section-info-item"><strong>Grade & Section:</strong> <span id="sectionInfoGrade"></span></div>
+                <div class="section-info-item"><strong>Adviser:</strong> <span id="sectionInfoAdviser"></span></div>
+                <div class="roster-count">👥 <span id="rosterCount">—</span> students</div>
             </div>
+            <div class="section-quarter">Quarter 1</div>
         </div>
-        <!-- ══ END: SECTION DETAIL ══ -->
+        <div class="roster-table-wrapper">
+            <table class="roster-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Student ID</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Middle Name</th>
+                        <th>Email</th>
+                        <th>Guardian's Name</th>
+                        <th>Guardian's Number</th>
+                    </tr>
+                </thead>
+                <tbody id="rosterTableBody">
+                    <tr><td colspan="8" style="text-align:center;color:#aaa;padding:30px;">Loading students…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- ══ END: SECTION DETAIL ══ -->
 
     </main>
 </div>
@@ -1095,38 +1107,40 @@ async function loadTeacherSections() {
 function viewSectionDetail(grade, section, adviser, sectionId) {
     hideAllPages();
     document.getElementById('sectionDetailPage').classList.remove('hidden');
-    document.getElementById('sectionDetailTitle').textContent = `${grade} - ${section}`;
     document.getElementById('sectionInfoGrade').textContent   = `${grade} - ${section}`;
     document.getElementById('sectionInfoAdviser').textContent = adviser;
     updateTopBar('📁', `${grade} - ${section}`, '');
     updateActiveNav(1);
     loadSectionRoster(sectionId);
 }
-
 async function loadSectionRoster(sectionId) {
     const tbody = document.getElementById('rosterTableBody');
-    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">Loading students…</td></tr>`;
+    const countEl = document.getElementById('rosterCount');
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#aaa;padding:30px;">Loading students…</td></tr>`;
     try {
         const res  = await apiFetch(`${API_BASE}/get_students.php?section_id=${sectionId}`);
         const data = await res.json();
         if (!data.success || !data.students.length) {
-            tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:20px;">No students in this section.</td></tr>`;
+            tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#aaa;padding:30px;">No students in this section.</td></tr>`;
+            if (countEl) countEl.textContent = '0';
             return;
         }
-        if (data.students.length) console.log('Student object keys:', Object.keys(data.students[0]), data.students[0]);
-        tbody.innerHTML = data.students.map(s => `
+        if (countEl) countEl.textContent = data.students.length;
+        tbody.innerHTML = data.students.map((s, i) => `
             <tr>
-                <td>${escHtml(s.first_name  || '—')}</td>
-                <td>${escHtml(s.middle_name || '—')}</td>
-                <td>${escHtml(s.last_name   || '—')}</td>
-                <td>${escHtml(s.contact_email || '—')}</td>
-                <td>${escHtml(s.guardian_name || s.parent_name || s.guardian_full_name || s.parent_full_name || s.emergency_contact_name || '—')}</td>
+                <td style="color:#aaa;font-weight:600;">${i + 1}</td>
+                <td style="font-weight:600;color:var(--navy);">${escHtml(s.student_number || '—')}</td>
+                <td style="font-weight:600;">${escHtml(s.last_name || '—')}</td>
+                <td>${escHtml(s.first_name || '—')}</td>
+                <td style="color:#888;">${escHtml(s.middle_name || '—')}</td>
+                <td style="color:#555;">${escHtml(s.contact_email || '—')}</td>
+                <td>${escHtml(s.guardian_name || s.parent_name || s.guardian_full_name || '—')}</td>
                 <td>${escHtml(s.guardian_phone || s.contact_phone || '—')}</td>
             </tr>
         `).join('');
     } catch(err) {
         console.error('loadSectionRoster:', err);
-        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#dc3545;padding:20px;">Failed to load students.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center;color:#dc3545;padding:30px;">Failed to load students.</td></tr>`;
     }
 }
 
