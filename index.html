@@ -180,17 +180,19 @@
         .penalties-list li:before { content: "→"; position: absolute; left: 0; color: var(--dark-navy); font-weight: bold; }
 
         .offense-history-page { padding: 40px; flex: 1; overflow-y: auto; }
-        .history-container { background: var(--light-gray); border-radius: 12px; padding: 40px; }
-        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
-        .search-input { padding: 12px 20px; background: var(--white); border: 2px solid #ddd; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 15px; color: var(--dark-navy); min-width: 300px; }
-        .search-input::placeholder { color: #ccc; }
-        .search-input:focus { outline: none; border-color: var(--navy); }
-        .date-select { padding: 12px 40px 12px 20px; background: var(--white); border: 2px solid #ddd; border-radius: 8px; font-family: 'Outfit', sans-serif; font-size: 15px; color: var(--dark-navy); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%232d2550' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 12px; }
-        .history-table-wrapper { background: var(--white); border-radius: 8px; overflow-x: auto; }
-        .history-table { width: 100%; border-collapse: collapse; }
-        .history-table th { padding: 15px 12px; text-align: center; font-size: 14px; font-weight: 600; color: var(--dark-navy); border: 2px solid var(--dark-navy); }
-        .history-table td { padding: 15px 12px; font-size: 13px; color: var(--dark-navy); border: 2px solid var(--dark-navy); text-align: center; }
-        .history-table tbody tr:hover { background: #f9f9f9; }
+.history-container { background: var(--white); border-radius: 16px; padding: 30px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+.history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; gap: 16px; }
+.search-input { flex: 1; padding: 12px 20px; background: var(--light); border: 2px solid var(--light-gray); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--dark-navy); transition: border-color 0.2s; }
+.search-input:focus { outline: none; border-color: var(--navy); }
+.date-select { padding: 12px 40px 12px 20px; background: var(--light); border: 2px solid var(--light-gray); border-radius: 10px; font-family: 'Outfit', sans-serif; font-size: 14px; color: var(--dark-navy); cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%232d2550' d='M0 0l6 8 6-8z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 12px; transition: border-color 0.2s; }
+.date-select:focus { outline: none; border-color: var(--navy); }
+.history-table-wrapper { border-radius: 10px; overflow: hidden; border: 1px solid var(--light-gray); }
+.history-table { width: 100%; border-collapse: collapse; }
+.history-table thead { background: var(--dark-navy); }
+.history-table th { padding: 14px 16px; text-align: left; font-size: 12px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; border: none; }
+.history-table td { padding: 14px 16px; font-size: 13px; color: var(--dark-navy); border-bottom: 1px solid #f0f0f0; text-align: left; }
+.history-table tbody tr:last-child td { border-bottom: none; }
+.history-table tbody tr:hover { background: #f5f3ff; }
 
         .my-sections-page { padding: 40px; flex: 1; overflow-y: auto; }
         .sections-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; }
@@ -547,31 +549,26 @@
         <!-- ══ END: DISCIPLINARY MEASURES ══ -->
 
         <!-- ══ PAGE: OFFENSE HISTORY ══ -->
-        <div id="offenseHistoryPage" class="offense-history-page hidden">
-            <button class="back-button" onclick="backToManageOffense()">
-                <div class="back-icon">←</div><span>Offense Report History</span>
-            </button>
-            <div class="history-container">
-                <div class="history-header">
-                    <input type="text" class="search-input" placeholder="Search" id="historySearch" oninput="filterHistoryTable(this.value)">
-                    <div style="display:flex;gap:20px;align-items:center;">
-                        <select class="date-select" id="historyDateSelect" onchange="filterHistoryByDate(this.value)">
-                            <option value="">All Dates</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="history-table-wrapper">
-                    <table class="history-table">
-                        <thead>
-                            <tr><th>Name</th><th>Offense</th><th>Level</th><th>Date</th><th>Reported by</th><th>Remarks</th><th>Status</th></tr>
-                        </thead>
-                        <tbody id="tbody-offense-history">
-                            <tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+<div id="offenseHistoryPage" class="offense-history-page hidden">
+    <div class="history-container">
+        <div class="history-header">
+            <input type="text" class="search-input" placeholder="🔍  Search by name or offense…" id="historySearch" oninput="filterHistoryTable(this.value)">
+            <select class="date-select" id="historyDateSelect" onchange="filterHistoryByDate(this.value)">
+                <option value="">All Dates</option>
+            </select>
         </div>
+        <div class="history-table-wrapper">
+            <table class="history-table">
+                <thead>
+                    <tr><th>Name</th><th>Offense</th><th>Level</th><th>Date</th><th>Reported by</th><th>Remarks</th></tr>
+                </thead>
+                <tbody id="tbody-offense-history">
+                    <tr><td colspan="6" style="text-align:center;color:#aaa;padding:30px;">Loading…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
         <!-- ══ END: OFFENSE HISTORY ══ -->
 
         <!-- ══ PAGE: MY SECTIONS ══ -->
@@ -994,13 +991,20 @@ async function loadOffenseHistory() {
 
 function populateDateDropdown(violations) {
     const sel   = document.getElementById('historyDateSelect');
-    const dates = [...new Set(violations.map(v => v.reported_at ? v.reported_at.split(' ')[0] : null).filter(Boolean))].sort().reverse();
-    sel.innerHTML = '<option value="">All Dates</option>' + dates.map(d => `<option value="${d}">${d}</option>`).join('');
+    const dates = [...new Set(violations.map(v => v.date_of_offense).filter(Boolean))].sort().reverse();
+    sel.innerHTML = '<option value="">All Dates</option>' +
+        dates.map(d => {
+            const display = new Date(d + 'T00:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+            return `<option value="${d}">${display}</option>`;
+        }).join('');
 }
 
 function renderHistoryTable(rows) {
     const tbody = document.getElementById('tbody-offense-history');
-    if (!rows.length) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;color:#aaa;padding:30px;">No records match.</td></tr>`; return; }
+    if (!rows.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;color:#aaa;padding:30px;">No records match.</td></tr>`;
+        return;
+    }
     tbody.innerHTML = rows.map(v => `
         <tr>
             <td>${escHtml(v.student_name)}</td>
@@ -1009,7 +1013,6 @@ function renderHistoryTable(rows) {
             <td>${escHtml(v.date_display || '—')}</td>
             <td>${escHtml(v.reporter_name || '—')}</td>
             <td>${escHtml(v.remarks || 'N/A')}</td>
-            <td class="${v.status === 'Verified' ? 'status-validated' : 'status-pending'}">${v.status === 'Verified' ? 'Validated' : 'Pending'}</td>
         </tr>
     `).join('');
 }
@@ -1018,16 +1021,24 @@ function filterHistoryTable(q) {
     const term    = q.trim().toLowerCase();
     const dateVal = document.getElementById('historyDateSelect').value;
     renderHistoryTable(historyData.filter(v => {
-        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
-        return matchSearch && (!dateVal || (v.reported_at||'').startsWith(dateVal));
+        const matchSearch = !term ||
+            (v.student_name || '').toLowerCase().includes(term) ||
+            (v.offense || '').toLowerCase().includes(term) ||
+            (v.reporter_name || '').toLowerCase().includes(term);
+        const matchDate = !dateVal || (v.date_of_offense || '').startsWith(dateVal);
+        return matchSearch && matchDate;
     }));
 }
 
 function filterHistoryByDate(dateVal) {
-    const term = (document.getElementById('historySearch').value||'').trim().toLowerCase();
+    const term = (document.getElementById('historySearch').value || '').trim().toLowerCase();
     renderHistoryTable(historyData.filter(v => {
-        const matchSearch = !term || Object.values(v).some(val => String(val||'').toLowerCase().includes(term));
-        return matchSearch && (!dateVal || (v.reported_at||'').startsWith(dateVal));
+        const matchSearch = !term ||
+            (v.student_name || '').toLowerCase().includes(term) ||
+            (v.offense || '').toLowerCase().includes(term) ||
+            (v.reporter_name || '').toLowerCase().includes(term);
+        const matchDate = !dateVal || (v.date_of_offense || '').startsWith(dateVal);
+        return matchSearch && matchDate;
     }));
 }
 
