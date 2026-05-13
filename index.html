@@ -855,18 +855,54 @@ function initStudentIdLookup() {
         const val = this.value.trim();
         if (!val) { box.className='av-student-lookup-box empty'; box.textContent=''; return; }
         box.className='av-student-lookup-box loading'; box.textContent='⏳ Looking up…';
-        timer = setTimeout(async () => {
-            const s = await fetchStudentByNumber(val);
-            if (s) {
+        // REPLACE
+timer = setTimeout(async () => {
+    try {
+        const isId = /^\d+$/.test(val);
+        const param = isId ? `student_number=${encodeURIComponent(val)}` : `search=${encodeURIComponent(val)}`;
+        const res  = await apiFetch(`${API_BASE}/get_students.php?${param}`);
+        const data = await res.json();
+        const students = (data.success && data.students) ? data.students : [];
+
+        if (students.length === 1) {
+            const s  = students[0];
+            const gs = [s.grade_level, s.section_name].filter(Boolean).join(' - ');
+            box.className = 'av-student-lookup-box found';
+            box.style.cssText = '';
+            box.innerHTML = `✓ <strong>${escHtml(s.full_name_display)}</strong> &nbsp;|&nbsp; ${escHtml(gs)}`;
+            document.getElementById('avStudentId').dataset.resolvedNumber = s.student_number;
+        } else if (students.length > 1) {
+            box.style.cssText = 'background:#f0f4ff;color:#3d3567;border:1px solid #c0caf5;width:100%;margin-top:6px;border-radius:7px;font-size:13px;font-weight:500;display:block;padding:0;overflow:hidden;max-height:200px;overflow-y:auto;';
+            box.innerHTML = students.map(s => {
                 const gs = [s.grade_level, s.section_name].filter(Boolean).join(' - ');
-                box.className = 'av-student-lookup-box found';
-                box.innerHTML = `✓ <strong>${escHtml(s.full_name_display)}</strong> &nbsp;|&nbsp; ${escHtml(gs)}`;
-            } else {
-                box.className = 'av-student-lookup-box not-found';
-                box.textContent = '✗ Student not found';
-            }
-        }, 400);
+                return `<div style="padding:9px 12px;cursor:pointer;border-bottom:1px solid #ddd;color:#1e1838;"
+                    onmousedown="avSelectStudent('${escJs(s.student_number)}','${escJs(s.full_name_display)}','${escJs(gs)}')">
+                    <strong>${escHtml(s.full_name_display)}</strong> &nbsp;|&nbsp; <span style="color:#888;">${escHtml(gs)}</span>
+                </div>`;
+            }).join('');
+        } else {
+            box.className = 'av-student-lookup-box not-found';
+            box.style.cssText = '';
+            box.textContent = '✗ Student not found';
+        }
+    } catch(err) {
+        console.error('Lookup error:', err);
+        box.className = 'av-student-lookup-box not-found';
+        box.style.cssText = '';
+        box.textContent = '✗ Lookup failed — check console';
+    }
+}, 400);
     });
+}
+
+function avSelectStudent(studentNumber, fullName, gradeSection) {
+    const input = document.getElementById('avStudentId');
+    const box   = document.getElementById('av-student-lookup-box');
+    input.value = studentNumber;
+    input.dataset.resolvedNumber = studentNumber;
+    box.style.cssText = '';
+    box.className = 'av-student-lookup-box found';
+    box.innerHTML = `✓ <strong>${escHtml(fullName)}</strong> &nbsp;|&nbsp; ${escHtml(gradeSection)}`;
 }
 
 async function showAddViolation() {
@@ -887,6 +923,8 @@ async function showAddViolation() {
 function closeAddViolationModal() {
     document.getElementById('addViolationModal').classList.add('hidden');
     document.getElementById('violationModalForm').reset();
+const si = document.getElementById('avStudentId');
+if (si) si.dataset.resolvedNumber = '';
     document.getElementById('offenseOptions').innerHTML = '<option value="">Select Level first</option>';
     const lb = document.getElementById('av-student-lookup-box');
     if (lb) { lb.className='av-student-lookup-box empty'; lb.textContent=''; }
@@ -901,7 +939,8 @@ async function submitViolation(e) {
     const submitBtn = document.getElementById('avSubmitBtn');
     errEl.textContent = '';
 
-    const studentNumber = document.getElementById('avStudentId').value.trim();
+   const idInput = document.getElementById('avStudentId');
+const studentNumber = idInput.dataset.resolvedNumber || idInput.value.trim();
     const levelValue    = document.getElementById('avOffenseLevel').value;
     const offenseSel    = document.getElementById('offenseOptions');
     const offenseTypeId = offenseSel.value;
