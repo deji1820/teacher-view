@@ -94,6 +94,17 @@
     border-color: transparent var(--dark-navy) transparent transparent;
 }
 
+.pw-req {
+    font-size: 12px;
+    color: #aaa;
+    padding: 3px 0;
+    transition: color 0.2s;
+    font-weight: 500;
+}
+.pw-req.met {
+    color: #28a745;
+}
+
 .info-circle:hover .info-tooltip { display: block; }
 
         .main-content { flex: 1; display: flex; flex-direction: column; overflow-y: hidden; }
@@ -1119,6 +1130,28 @@ async function viewMySections() {
     await loadTeacherSections();
 }
 
+function checkTeacherPasswordStrength() {
+    const pw  = document.getElementById('tflNewPassword').value;
+    const pw2 = document.getElementById('tflConfirmPassword').value;
+
+    const rules = {
+        length:  pw.length >= 8,
+        upper:   /[A-Z]/.test(pw),
+        lower:   /[a-z]/.test(pw),
+        number:  /[0-9]/.test(pw),
+        special: /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pw),
+        match:   pw.length > 0 && pw === pw2
+    };
+
+    Object.entries(rules).forEach(([key, met]) => {
+        const el = document.getElementById(`tfl-req-${key}`);
+        if (!el) return;
+        el.classList.toggle('met', met);
+        const text = el.textContent.replace(/^[✓✗]\s*/, '');
+        el.textContent = (met ? '✓' : '✗') + ' \u00A0' + text;
+    });
+}
+
 async function loadDashboardStats() {
     const tid = getTeacherId();
 
@@ -1249,51 +1282,57 @@ async function submitFirstLoginPassword(role) {
     const errEl       = document.getElementById('tflError');
     errEl.textContent = '';
 
-    if (newPass.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
-    if (newPass !== confirmPass) { errEl.textContent = 'Passwords do not match.'; return; }
+    const hasUpper   = /[A-Z]/.test(newPass);
+    const hasLower   = /[a-z]/.test(newPass);
+    const hasNumber  = /[0-9]/.test(newPass);
+    const hasSpecial = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPass);
 
-    try {
-        const res  = await apiFetch(`${API_BASE}/change_password.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ role: 'teacher', identifier: getTeacherId(), new_password: newPass }),
-        });
-        const data = await res.json();
-        if (data.success) {
-            document.getElementById('teacherFirstLoginModal').classList.add('hidden');
-        } else {
-            errEl.textContent = data.message || 'Failed to update password.';
-        }
-    } catch (err) {
-        errEl.textContent = 'Network error. Please try again.';
-    }
-}
+    if (newPass.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+    if (!hasUpper)          { errEl.textContent = 'Password must contain an uppercase letter.'; return; }
+    if (!hasLower)          { errEl.textContent = 'Password must contain a lowercase letter.'; return; }
+    if (!hasNumber)         { errEl.textContent = 'Password must contain a number.'; return; }
+    if (!hasSpecial)        { errEl.textContent = 'Password must contain a special character.'; return; }
+    if (newPass !== confirmPass) { errEl.textContent = 'Passwords do not match.'; return; }
 </script>
 <!-- ── First Login Modal ── -->
 <div id="teacherFirstLoginModal" style="position:fixed;top:0;left:0;width:100%;height:100%;
      background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;
      z-index:99998;backdrop-filter:blur(5px);" class="hidden">
-    <div style="background:#fff;border-radius:16px;padding:50px 60px;max-width:440px;width:90%;
+    <div style="background:#fff;border-radius:16px;padding:50px 60px;max-width:480px;width:90%;
                 box-shadow:0 20px 60px rgba(0,0,0,0.3);text-align:center;">
         <div style="font-size:52px;margin-bottom:16px;">🔐</div>
         <div style="font-size:22px;font-weight:700;color:#2d2550;margin-bottom:8px;">Welcome!</div>
         <div style="font-size:14px;color:#666;margin-bottom:28px;">
             For your security, please change your password before continuing.
         </div>
-        <div style="text-align:left;display:flex;flex-direction:column;gap:16px;margin-bottom:20px;">
+        <div style="text-align:left;display:flex;flex-direction:column;gap:16px;margin-bottom:16px;">
             <div>
                 <label style="font-size:13px;font-weight:600;color:#2d2550;display:block;margin-bottom:6px;">New Password</label>
                 <input type="password" id="tflNewPassword" placeholder="At least 8 characters"
+                    oninput="checkTeacherPasswordStrength()"
                     style="width:100%;padding:12px 16px;border:2px solid #ddd;border-radius:8px;
                            font-family:'Outfit',sans-serif;font-size:14px;color:#2d2550;">
             </div>
             <div>
                 <label style="font-size:13px;font-weight:600;color:#2d2550;display:block;margin-bottom:6px;">Confirm Password</label>
                 <input type="password" id="tflConfirmPassword" placeholder="Re-enter new password"
+                    oninput="checkTeacherPasswordStrength()"
                     style="width:100%;padding:12px 16px;border:2px solid #ddd;border-radius:8px;
                            font-family:'Outfit',sans-serif;font-size:14px;color:#2d2550;">
             </div>
         </div>
+
+        <!-- Password requirements -->
+        <div style="text-align:left;background:#f8f8f8;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:600;color:#555;margin-bottom:8px;">Password must contain:</div>
+            <div id="tfl-req-length"  class="pw-req">✗ &nbsp;At least 8 characters</div>
+            <div id="tfl-req-upper"   class="pw-req">✗ &nbsp;One uppercase letter (A–Z)</div>
+            <div id="tfl-req-lower"   class="pw-req">✗ &nbsp;One lowercase letter (a–z)</div>
+            <div id="tfl-req-number"  class="pw-req">✗ &nbsp;One number (0–9)</div>
+            <div id="tfl-req-special" class="pw-req">✗ &nbsp;One special character (!@#$%^&*)</div>
+            <div id="tfl-req-match"   class="pw-req">✗ &nbsp;Passwords match</div>
+        </div>
+
         <div id="tflError" style="color:#dc3545;font-size:13px;min-height:18px;margin-bottom:12px;"></div>
         <button onclick="submitFirstLoginPassword('teacher')"
             style="width:100%;background:#2d2550;color:#d4a650;border:none;border-radius:8px;
