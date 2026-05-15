@@ -1293,6 +1293,24 @@ async function submitFirstLoginPassword(role) {
     if (!hasNumber)         { errEl.textContent = 'Password must contain a number.'; return; }
     if (!hasSpecial)        { errEl.textContent = 'Password must contain a special character.'; return; }
     if (newPass !== confirmPass) { errEl.textContent = 'Passwords do not match.'; return; }
+
+    try {
+        const res  = await apiFetch(`${API_BASE}/change_password.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ role: 'teacher', identifier: getTeacherId(), new_password: newPass }),
+        });
+        const data = await res.json();
+        if (data.success) {
+            document.getElementById('teacherFirstLoginModal').classList.add('hidden');
+        } else {
+            errEl.textContent = data.message || 'Failed to update password.';
+        }
+    } catch (err) {
+        errEl.textContent = 'Network error. Please try again.';
+    }
+}
+</script>
 </script>
 <!-- ── First Login Modal ── -->
 <div id="teacherFirstLoginModal" style="position:fixed;top:0;left:0;width:100%;height:100%;
